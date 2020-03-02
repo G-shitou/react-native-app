@@ -16,11 +16,11 @@ import {
   StatusBar,
 } from 'react-native';
 
-export default class Page2 extends React.Component{
+export default class Setting extends React.Component{
   render() {
     return (
       <SafeAreaView>
-        <Text>page2</Text>
+        <Text>Setting</Text>
       </SafeAreaView>
     );
   }

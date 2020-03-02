@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack'
 import Page1 from '../page/page1';
 import Page2 from '../page/page2';
 import Page3 from '../page/page3';
