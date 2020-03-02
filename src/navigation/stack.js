@@ -18,7 +18,7 @@ function StackNavigator() {
             headerMode='float'
             screenOptions={{                 //用来定制头部信息、根据自己需要更改
                 headerStyle: {
-                    backgroundColor: '#ee7530'
+                    backgroundColor: '#2D92FF'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {

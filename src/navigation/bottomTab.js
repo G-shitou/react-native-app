@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // 引入字体图标组件
 import Icon from 'react-native-vector-icons/AntDesign'
+// 引入topTab Screen
+import TopTab from './topTab';
 // 引入页面
 import Home from '../page/home';
 import Square from '../page/square';
@@ -41,10 +43,14 @@ function TabScreen() {
         >
             <Tab.Screen name="首页" component={Home} />
             <Tab.Screen name="广场" component={Square} />
-            <Tab.Screen name="公众号" component={WeChat} />
+            <Tab.Screen name="公众号" component={TopTab} />
             <Tab.Screen name="体系" component={System} />
             <Tab.Screen name="项目" component={Project} />
         </Tab.Navigator>
     );
 }
 export default TabScreen;
+
+const styles = StyleSheet.create({
+    
+});

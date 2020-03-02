@@ -26,40 +26,10 @@ export default class Home extends React.Component{
     return (
       <SafeAreaView>
         <Text>home</Text>
-        <Button title={'go to page2'} onPress={() => {
-          console.log(1)
-        }}></Button>
-        <Button title={'跳转到广场'} onPress={() => {
-          navigation.navigate('广场', {
-            name: 'Page3',
-            mode: ''
-          })
-        }}></Button>
       </SafeAreaView>
     );
   }
 };
-// export default class Page1 extends React.Component{
-//   render() {
-//     const {navigation} = this.props;
-//     return (
-//         <SafeAreaView>
-//           <Text>page1</Text>
-//           <Button title={'go to page2'} onPress={()=>{
-//               navigation.navigate('Page2',{
-//                 name:'page2'
-//               })
-//             }}></Button>
-//           <Button title={'go to page3'} onPress={()=>{
-//             navigation.navigate('Page3',{
-//               name:'page3',
-//               mode:''
-//             })
-//           }}></Button>
-//         </SafeAreaView>
-//     );
-//   }
-// };
 
 const styles = StyleSheet.create({
 
