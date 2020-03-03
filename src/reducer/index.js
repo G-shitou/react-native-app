@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import homeReducer from './home'
 const baseState = {
 
 }
@@ -9,6 +10,7 @@ const baseReducer = (state = baseState, action) => {
     }
 };
 const index = combineReducers({
-    baseReducer
+    baseReducer,
+    homeReducer
 });
 export default index;
