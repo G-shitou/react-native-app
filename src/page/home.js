@@ -87,6 +87,8 @@ class Home extends React.Component{
           <View style={styles.swiper}>
             {/* {this.state.swiperNode} */}
             <Swiper style={styles.swiper}
+              dot={<View style={[styles.swiper_dot,{ backgroundColor: this.props.theme.backgroundColor}]} />}
+              activeDot={<View style={[styles.swiper_dot,{ backgroundColor: this.props.theme.themeColor}]} />}
               autoplay={true} >
               {this.props.banner.reverse().map(item => {
                 return (
@@ -115,7 +117,8 @@ const mapStateToProps = state => {
       article: state.homeReducer.article,
       topArticle: state.homeReducer.topArticle,
       pageNum: state.homeReducer.pageNum,
-      pageCount: state.homeReducer.pageCount
+      pageCount: state.homeReducer.pageCount,
+      theme: state.themeReducer.theme
   }
 }
 export default connect(mapStateToProps)(Home)
@@ -131,5 +134,14 @@ const styles = StyleSheet.create({
   swiper_image:{
     width: win.width,
     height: 200,
+  },
+  swiper_dot:{
+    marginBottom:4,
+    marginTop:4,
+    marginLeft:4,
+    marginRight:4,
+    width:8,
+    height:8,
+    borderRadius:6
   }
 });

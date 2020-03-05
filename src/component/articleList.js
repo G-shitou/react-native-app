@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
     RefreshControl
 } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign'
 import Tag from './tag';
 
 class ArticleList extends React.PureComponent {
@@ -51,6 +52,11 @@ class ArticleList extends React.PureComponent {
           });
     }
 
+    // 点击收藏或取消收藏
+    handleCollect = item => {
+        console.log(item);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -61,19 +67,22 @@ class ArticleList extends React.PureComponent {
                                refreshing={this.state.refreshing}
                                onRefresh={this.onRefresh}
                                colors={[this.props.theme.loadingColor]}
+                               progressBackgroundColor={this.props.theme.backgroundColor}
                            />}
                         onEndReachedThreshold={0.1}
                         onEndReached={this.loadmore}
                         ListHeaderComponent={this.props.children}
                         ListFooterComponent={
                             <View style={styles.loading}>
-                                <ActivityIndicator size="small" color={this.props.theme.loadingColor}/>
-                                <Text style={[styles.loading_text,{color:this.props.theme.subColor}]}>{this.props.pageNum === this.props.pageCount ? '没有更多数据了' : '正在加载更多数据'}</Text>
+                                {(typeof(this.props.pageCount) === 'undefined' || this.props.pageNum !== this.props.pageCount) && <ActivityIndicator size="small" color={this.props.theme.loadingColor}/>}
+                                <Text style={[styles.loading_text,{color:this.props.theme.subColor}]}>
+                                    {typeof(this.props.pageCount) === 'undefined' ? '正在加载更多数据' : this.props.pageNum === this.props.pageCount ? '没有更多数据了' : '正在加载更多数据'}
+                                </Text>
                             </View>
                         }
                         data={this.props.articles}
                         renderItem={({item}) => 
-                            <ListItem params={item} onHandle={this.handleArticle} theme={this.props.theme} />
+                            <ListItem params={item} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={this.handleCollect}/>
                         }>
                     </FlatList>
                 )}
@@ -112,7 +121,7 @@ class ListItem extends React.PureComponent {
                     <Text style={[styles.article_flex,{color:this.props.theme.subColor}]}>
                         {item.chapterName ? `${item.superChapterName} / ${item.chapterName}` : item.superChapterName}
                     </Text>
-                    <Text style={[styles.article_fixed,{color:this.props.theme.subColor}]}>收藏</Text>
+                    <Icon name='hearto' size={16} color={this.props.theme.subColor} onPress={() => this.props.handleCollect(item)}/>
                 </View>
             </View>
         </TouchableHighlight>
