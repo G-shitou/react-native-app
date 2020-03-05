@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
-import homeReducer from './home'
+import homeReducer from './home';
+import themeReducer from './theme';
 const baseState = {
 
 }
@@ -10,7 +11,7 @@ const baseReducer = (state = baseState, action) => {
     }
 };
 const index = combineReducers({
-    baseReducer,
-    homeReducer
+    homeReducer,
+    themeReducer
 });
 export default index;

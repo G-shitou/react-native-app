@@ -24,7 +24,7 @@ export default class Web extends React.Component {
                 {this.state.progress !== 1 && (Platform.OS === 'IOS' ? <ProgressViewIOS
                     //这是进度条颜色
                     progressTintColor="#2D92FF"
-                    progress={this.state.progress}/> : <ProgressBarAndroid color="#2D92FF" progress={this.state.progress}/>)}
+                    progress={this.state.progress}/> : <ProgressBarAndroid styleAttr="Horizontal" color="#2D92FF" progress={this.state.progress}/>)}
                 <WebView
                     source={{ uri: url }}
                     style={{ flex: 1 }}

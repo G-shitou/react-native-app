@@ -2,8 +2,8 @@ import type from '../../action/type';
 const homeState = {
     banner:[],
     article:[],
-    pageCount:0,
-    pageNum:0
+    pageCount:undefined,
+    pageNum:undefined
 }
 const homeData = (state = homeState, action) => {
     switch (action.type) {
