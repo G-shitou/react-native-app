@@ -21,12 +21,12 @@ class StackNavigator extends React.Component {
                 headerMode='float'
                 screenOptions={{                 //用来定制头部信息、根据自己需要更改
                     headerStyle: {
-                        backgroundColor: this.props.theme.themeColor
+                        backgroundColor: this.props.theme.themeColor,
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
-                        fontSize: 20
-                    }
+                        fontSize: 18,
+                    },
                 }}>
 
                 <Stack.Screen name="首页" component={TabScreen}
@@ -67,12 +67,12 @@ export default connect(mapStateToProps)(StackNavigator)
 const styles = StyleSheet.create({
     headerRight: {
         color: '#fff',
-        fontSize: 25,
+        fontSize: 20,
         marginRight: 20,
     },
     headerLeft: {
         color: '#fff',
-        fontSize: 25,
+        fontSize: 20,
         marginLeft: 20,
         marginRight: 0
     }
