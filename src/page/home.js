@@ -79,7 +79,7 @@ class Home extends React.Component{
   render() {
     const { navigation } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
         {/* 文章区域（推荐文章,文章列表） */}
         <ArticleList articles={[...this.props.topArticle,...this.props.article]} loadmore={this.loadmore} reload={this.onRefresh} 
           pageCount={this.props.pageCount} pageNum={this.props.pageNum} navigation={ navigation } >
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   },
   swiper:{
     height:200,
+    marginBottom:5
   },
   swiper_image:{
     width: win.width,

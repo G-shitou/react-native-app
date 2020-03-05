@@ -7,17 +7,22 @@ import {
     View,
     TouchableHighlight,
     ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Dimensions
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/AntDesign';
+import ActionButton from 'react-native-action-button';
 import Tag from './tag';
 
+// 屏幕
+const win = Dimensions.get('window');
 class ArticleList extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             refreshing:false,
-            loadmore:true
+            loadmore:true,
+            isShowToTop:false
         };
     }
 
@@ -57,11 +62,23 @@ class ArticleList extends React.PureComponent {
         console.log(item);
     }
 
+    // 滚动监听
+    onScroll = (event) => {
+        let offsetTop = event.nativeEvent.contentOffset.y;
+        // 减去header和tab-bottom的高度
+        if(offsetTop >= win.height-100){
+            !this.state.isShowToTop && this.setState({isShowToTop:true});
+        }else{
+            this.state.isShowToTop && this.setState({isShowToTop:false});
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 {this.props.articles.length === 0 ? <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/> : (
                     <FlatList
+                        ref={(flatList)=>this._flatList = flatList}
                         refreshControl={
                             <RefreshControl
                                refreshing={this.state.refreshing}
@@ -80,12 +97,24 @@ class ArticleList extends React.PureComponent {
                                 </Text>
                             </View>
                         }
+                        onScroll={this.onScroll}
                         data={this.props.articles}
                         renderItem={({item}) => 
                             <ListItem params={item} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={this.handleCollect}/>
                         }>
                     </FlatList>
                 )}
+                {this.state.isShowToTop && <ActionButton
+                    size={50}
+                    buttonColor={this.props.theme.themeColor}
+                    onPress={() => {
+                        this._flatList.scrollToOffset({animated: true, viewPosition: 0, index: 0}); //跳转到顶部
+                        // this._flatList.scrollToEnd();  //跳转到底部
+                    }}
+                    renderIcon={() => (
+                        <Icon style={styles.goUp} name="arrowup" size={24} color='#fff'/>
+                    )}
+                />}
             </View>
         );
     }
