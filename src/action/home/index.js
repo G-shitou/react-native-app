@@ -6,6 +6,12 @@ export function banner(banner) {
         banner
     }
 }
+export function topArticle(article) {
+    return {
+        type:type.HOME_TOPARTICLE,
+        article
+    }
+}
 export function article(article) {
     return {
         type:type.HOME_ARTICLE,
@@ -42,6 +48,26 @@ export function getBanner(){
         })
     }
 }
+
+// 获取首页置顶文章
+export function getTopArticle(){
+    return (dispatch, getState) => {
+        return new Promise(function (resolve, reject) {
+            fetch.get('/article/top/json').then((res) => {
+                // res.errorCode,errorMsg,data
+                if(res.errorCode != 0){
+                    reject({msg:res.errorMsg || '请求错误!',errorCode:res.errorCode})
+                }else{
+                    dispatch(topArticle(res.data));
+                    resolve();
+                }
+            }).catch( error => {
+                reject({msg:'网络错误!',code:error});
+            })
+        })
+    }
+}
+
 // 获取首页文章列表
 export function getArticle(params){
     return (dispatch, getState) => {
@@ -55,7 +81,6 @@ export function getArticle(params){
             }
             // 用页码构造地址
             const url = `/article/list/${params.pageNum}/json`;
-            console.log(url);
             fetch.get(url).then((res) => {
                 // res.errorCode,errorMsg,data
                 if(res.errorCode != 0){
@@ -64,7 +89,7 @@ export function getArticle(params){
                     let articles;
                     // 如果不是刷新第一页,则concat数组
                     if(params.pageNum !== 0){
-                        articles = res.data.datas.concat(state.article);
+                        articles = state.article.concat(res.data.datas);
                     }else{
                         articles = res.data.datas;
                     }

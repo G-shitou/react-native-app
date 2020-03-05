@@ -1,6 +1,7 @@
 import type from '../../action/type';
 const homeState = {
     banner:[],
+    topArticle: [],
     article:[],
     pageCount:undefined,
     pageNum:undefined
@@ -12,6 +13,13 @@ const homeData = (state = homeState, action) => {
             return {
                 ...state,
                 banner:action.banner
+            };
+            break;
+        // 刷新topArticle
+        case type.HOME_TOPARTICLE:
+            return {
+                ...state,
+                topArticle:action.article
             };
             break;
         // 刷新article

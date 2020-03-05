@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getBanner, getArticle, pageNum } from '../action/home/index';
+import { getBanner, getArticle, getTopArticle } from '../action/home/index';
 import Swiper from 'react-native-swiper';
 import {
   StyleSheet,
@@ -23,6 +23,15 @@ class Home extends React.Component{
 
   UNSAFE_componentWillMount(){
     this.onRefresh();
+  }
+
+  // 请求推荐文章列表
+  getTopArticleList = () => {
+    this.props.dispatch(getTopArticle()).then(res => {
+      
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   // 请求文章列表
@@ -57,6 +66,7 @@ class Home extends React.Component{
   onRefresh = () => {
     // 刷新数据
     this.getBannerDate();
+    this.getTopArticleList();
     this.getArticleList(0);
   }
 
@@ -71,7 +81,7 @@ class Home extends React.Component{
     return (
       <View style={styles.container}>
         {/* 文章区域（推荐文章,文章列表） */}
-        <ArticleList articles={this.props.article} loadmore={this.loadmore} reload={this.onRefresh} 
+        <ArticleList articles={[...this.props.topArticle,...this.props.article]} loadmore={this.loadmore} reload={this.onRefresh} 
           pageCount={this.props.pageCount} pageNum={this.props.pageNum} navigation={ navigation } >
           {/* 首页轮播图 */}
           <View style={styles.swiper}>
@@ -103,6 +113,7 @@ const mapStateToProps = state => {
   return {
       banner: state.homeReducer.banner,
       article: state.homeReducer.article,
+      topArticle: state.homeReducer.topArticle,
       pageNum: state.homeReducer.pageNum,
       pageCount: state.homeReducer.pageCount
   }

@@ -92,6 +92,7 @@ class ListItem extends React.PureComponent {
                 {/* tap,auther,time */}
                 <View style={styles.article_top_bottom}>
                     <View style={[styles.article_flex,{color:this.props.theme.subColor}]}>
+                        {item.type == 1 && <Tag content='置顶' style={styles.tag_new}></Tag>}
                         {item.fresh && <Tag content='新' style={styles.tag_new}></Tag>}
                         {item.tags.length !== 0 && item.tags.map(item => {
                             return (<Tag content={item.name} style={styles.tag_type} key={item.name}></Tag>)
