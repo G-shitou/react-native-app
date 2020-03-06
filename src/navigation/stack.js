@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import TabScreen from './bottomTab';
 // 引入页面
 import Search from '../page/search';
-import Web from '../page/web';
+import Webview from '../page/webview';
+import Login from '../page/login'
 const Stack = createStackNavigator();
 // Stack 导航设置
 class StackNavigator extends React.Component {
@@ -48,7 +49,11 @@ class StackNavigator extends React.Component {
                         )
                     })} />
                 <Stack.Screen name="搜索" component={Search}></Stack.Screen>
-                <Stack.Screen name="webview" component={Web} 
+                <Stack.Screen name="login" component={Login}
+                    options={({ route, navigation }) => ({
+                        title: route.params.title
+                    })}></Stack.Screen>
+                <Stack.Screen name="webview" component={Webview} 
                     options={({ route, navigation }) => ({
                         title: route.params.title
                     })}></Stack.Screen>

@@ -6,15 +6,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/AntDesign';
 // 引入stack导航
 import StackNavigator from './stack';
+import MenuList from '../page/drawerMenu';
 const Drawer = createDrawerNavigator();
 function DrawerScreen() {
     return (
         <Drawer.Navigator initialRouteName="首页"
             drawerContent={({ state, navigation, descriptors, progress }) => {
-                return <Icon
-                    name='search1'
-                    onPress={() => navigation.toggleDrawer()}
-                />
+                return <MenuList navigation={navigation}></MenuList>
             }}>
             {/* 抽屉导航 */}
             <Drawer.Screen name="首页" component={StackNavigator} />

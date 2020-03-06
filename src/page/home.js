@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getBanner, getArticle, getTopArticle } from '../action/home/index';
+import { login } from '../action/login'
 import Swiper from 'react-native-swiper';
+import CookieManager from '@react-native-community/cookies';
 import {
   StyleSheet,
   Button,
@@ -22,7 +24,26 @@ class Home extends React.Component{
   }
 
   UNSAFE_componentWillMount(){
-    this.onRefresh();
+    // 判断是否有cookie，如果有自动登录
+    CookieManager.get('cookie').then((res) => {
+      if(JSON.stringify(res) != '{}'){
+        this.props.dispatch(login()).then(res=>{
+
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+      this.onRefresh();
+    });
+  }
+
+
+  // 登录和未登录状态切换,或者切换用户之后需要刷新数据
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(this.props.score.userId !== nextProps.score.userId){
+      console.log('用户变更,刷新数据');
+      this.onRefresh();
+    }
   }
 
   // 请求推荐文章列表
@@ -118,7 +139,8 @@ const mapStateToProps = state => {
       topArticle: state.homeReducer.topArticle,
       pageNum: state.homeReducer.pageNum,
       pageCount: state.homeReducer.pageCount,
-      theme: state.themeReducer.theme
+      theme: state.themeReducer.theme,
+      score: state.baseReducer.score,
   }
 }
 export default connect(mapStateToProps)(Home)

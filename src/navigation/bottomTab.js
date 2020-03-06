@@ -35,14 +35,19 @@ class TabScreen extends React.Component {
                         } else {
                             iconName = 'profile'
                         }
-                        return <Icon name={iconName} size={25} color={colors} />;
+                        return <Icon style={{marginTop:5}} name={iconName} size={25} color={colors} />;
                     }
                 })}
                 tabBarOptions={{
                     activeTintColor: this.props.theme.themeColor,
                     inactiveTintColor: this.props.theme.subColor,
-                    activeBackgroundColor:this.props.theme.backgroundColor,
-                    inactiveBackgroundColor:this.props.theme.backgroundColor,
+                    // activeBackgroundColor:this.props.theme.backgroundColor,
+                    // inactiveBackgroundColor:this.props.theme.backgroundColor,
+                    style:{
+                        height:60,
+                        paddingBottom:5,
+                        backgroundColor:this.props.theme.backgroundColor
+                    }
                 }}
             >
                 <Tab.Screen name="首页" component={Home} />

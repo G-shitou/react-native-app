@@ -1024,6 +1024,13 @@
     wcwidth "^1.0.1"
     ws "^1.1.0"
 
+"@react-native-community/cookies@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/@react-native-community/cookies/download/@react-native-community/cookies-2.0.3.tgz#274e7d14ec0bd9b3ed9b0d96e8b0fdaddf103883"
+  integrity sha1-J059FOwL2bPtmw2W6LD9rd8QOIM=
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^0.0.7":
   version "0.0.7"
   resolved "https://registry.npm.taobao.org/@react-native-community/eslint-config/download/@react-native-community/eslint-config-0.0.7.tgz?cache=0&sync_timestamp=1580126103034&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40react-native-community%2Feslint-config%2Fdownload%2F%40react-native-community%2Feslint-config-0.0.7.tgz#2a91d336b413d8c77ac5fa634b66703f481243ac"
