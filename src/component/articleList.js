@@ -58,8 +58,8 @@ class ArticleList extends React.PureComponent {
     }
 
     // 点击收藏或取消收藏
-    handleCollect = item => {
-        console.log(item);
+    handleCollect = index => {
+        this.props.handleCollect(index);
     }
 
     // 滚动监听
@@ -99,8 +99,8 @@ class ArticleList extends React.PureComponent {
                         }
                         onScroll={this.onScroll}
                         data={this.props.articles}
-                        renderItem={({item}) => 
-                            <ListItem params={item} key={item.id} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={this.handleCollect}/>
+                        renderItem={({item,index}) => 
+                            <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                         }>
                     </FlatList>
                 )}
@@ -150,7 +150,7 @@ class ListItem extends React.PureComponent {
                     <Text style={[styles.article_flex,{color:this.props.theme.subColor}]}>
                         {item.chapterName ? `${item.superChapterName} / ${item.chapterName}` : item.superChapterName}
                     </Text>
-                    <Icon name='heart' size={16} color={item.collect ? '#FF6262': this.props.theme.subColor} onPress={() => this.props.handleCollect(item)}/>
+                    <Icon name='heart' size={16} color={item.collect ? '#FF6262': this.props.theme.subColor} onPress={this.props.handleCollect}/>
                 </View>
             </View>
         </TouchableHighlight>

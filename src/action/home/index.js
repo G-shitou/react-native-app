@@ -40,7 +40,7 @@ export function getBanner(){
                     reject({msg:res.errorMsg || '请求错误!',errorCode:res.errorCode})
                 }else{
                     dispatch(banner(res.data));
-                    resolve();
+                    resolve(res);
                 }
             }).catch( error => {
                 reject({msg:'网络错误!',code:error});
@@ -59,7 +59,7 @@ export function getTopArticle(){
                     reject({msg:res.errorMsg || '请求错误!',errorCode:res.errorCode})
                 }else{
                     dispatch(topArticle(res.data));
-                    resolve();
+                    resolve(res);
                 }
             }).catch( error => {
                 reject({msg:'网络错误!',code:error});
@@ -99,7 +99,50 @@ export function getArticle(params){
                     dispatch(pageCount(res.data.pageCount));
                     // 刷新当前页码
                     dispatch(pageNum(params.pageNum));
-                    resolve();
+                    resolve(res);
+                }
+            }).catch( error => {
+                reject({msg:'网络错误!',code:error});
+            })
+        })
+    }
+}
+// 首页收藏或取消收藏文章
+export function collectArticle(params){
+    return (dispatch, getState) => {
+        let state = getState().homeReducer,
+            index = params.index,
+            id,
+            url,
+            toastInfo,
+            newList;
+        // 文章是由推荐和普通的列表
+        if(index < state.topArticle.length){
+            newList = JSON.parse(JSON.stringify(state.topArticle));
+            id = newList[index].id;
+            url = newList[index].collect ? `/lg/uncollect_originId/${id}/json` : `/lg/collect/${id}/json`;
+            toastInfo = newList[index].collect ? '取消收藏成功' : '收藏成功';
+            newList[index].collect = !newList[index].collect;
+        }else{
+            newList = JSON.parse(JSON.stringify(state.article));
+            id = newList[index-state.topArticle.length].id;
+            url = newList[index-state.topArticle.length].collect ? `/lg/uncollect_originId/${id}/json` : `/lg/collect/${id}/json`;
+            toastInfo = newList[index-state.topArticle.length].collect ? '取消收藏成功' : '收藏成功';
+            newList[index-state.topArticle.length].collect = !newList[index-state.topArticle.length].collect;
+        }
+        return new Promise(function (resolve, reject) {
+            fetch.post(url).then((res) => {
+                // res.errorCode,errorMsg,data
+                if(res.errorCode != 0){
+                    reject({msg:res.errorMsg || '请求错误!',errorCode:res.errorCode})
+                }else{
+                    // 更新对应的artcle数组
+                    if(index < state.topArticle.length){
+                        dispatch(topArticle(newList));
+                    }else{
+                        dispatch(article(newList));
+                    }
+                    resolve({msg:toastInfo});
                 }
             }).catch( error => {
                 reject({msg:'网络错误!',code:error});

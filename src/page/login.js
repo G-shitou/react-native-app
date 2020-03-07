@@ -18,8 +18,8 @@ class Login extends React.Component {
         this.state = {
             isLogin: true,
             buttonName:'登录',
-            username:'',
-            password:'',
+            username:'石头来了',
+            password:'123456',
             confirmPassword:'',
         };
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getBanner, getArticle, getTopArticle } from '../action/home/index';
+import { getBanner, getArticle, getTopArticle, collectArticle } from '../action/home/index';
 import { login } from '../action/login'
 import Swiper from 'react-native-swiper';
 import CookieManager from '@react-native-community/cookies';
@@ -14,6 +14,7 @@ import {
   Dimensions,
 } from 'react-native';
 import ArticleList from '../component/articleList';
+import Toast from '../component/toast';
 
 class Home extends React.Component{
   constructor(props){
@@ -97,13 +98,31 @@ class Home extends React.Component{
     this.getArticleList();
   }
 
+  // 点击收藏或取消收藏
+  handleCollect = (index) => {
+    // 判断是否登录
+    if(this.props.score && this.props.score.userId){
+      this.props.dispatch(collectArticle({index})).then(res => {
+        this.toast.show(res.msg);
+      }).catch(err => {
+        this.toast.show(err.msg);
+        console.log(err);
+      })
+    }else{
+      // 跳转到登录页
+      this.toast.show('您还未登录,请先登录!',100,() => {
+        this.props.navigation.navigate('login',{title:'登录'});
+      })
+    }
+  }
+
   render() {
     const { navigation } = this.props;
     return (
       <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
         {/* 文章区域（推荐文章,文章列表） */}
         <ArticleList articles={[...this.props.topArticle,...this.props.article]} loadmore={this.loadmore} reload={this.onRefresh} 
-          pageCount={this.props.pageCount} pageNum={this.props.pageNum} navigation={ navigation } >
+          pageCount={this.props.pageCount} pageNum={this.props.pageNum} navigation={ navigation } handleCollect={this.handleCollect}>
           {/* 首页轮播图 */}
           <View style={styles.swiper}>
             {/* {this.state.swiperNode} */}
@@ -128,6 +147,7 @@ class Home extends React.Component{
             </Swiper>
           </View>
         </ArticleList>
+        <Toast ref={(toast) => this.toast = toast}></Toast>
       </View>
     );
   }
