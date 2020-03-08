@@ -1,7 +1,5 @@
 import {combineReducers} from 'redux';
-import homeReducer from './home';
 import themeReducer from './theme';
-import squareReducer from './square'
 import type from '../action/type';
 const baseState = {
     userinfo:'',
@@ -31,8 +29,6 @@ const baseReducer = (state = baseState, action) => {
 };
 const index = combineReducers({
     baseReducer,
-    homeReducer,
-    squareReducer,
     themeReducer,
 });
 export default index;

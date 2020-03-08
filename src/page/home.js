@@ -1,26 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getBanner, getArticle, getTopArticle, collectArticle } from '../action/home/index';
+import fetch from '../utils/fetch';
 import { login } from '../action/login'
 import Swiper from 'react-native-swiper';
 import CookieManager from '@react-native-community/cookies';
 import {
   StyleSheet,
-  Button,
   View,
   Image,
   TouchableOpacity,
-  Text,
   Dimensions,
 } from 'react-native';
-import ArticleList from '../component/articleList';
+import FlatList from '../component/flatList';
 import Toast from '../component/toast';
 
 class Home extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      
+      banner:[],
+      topArticle: [],
+      article:[],
+      pageCount:undefined,
+      pageNum:undefined
     }
   }
 
@@ -49,29 +51,65 @@ class Home extends React.Component{
 
   // 请求推荐文章列表
   getTopArticleList = () => {
-    this.props.dispatch(getTopArticle()).then(res => {
-      
-    }).catch(err => {
-      console.log(err);
+    fetch.get('/article/top/json').then((res) => {
+      // res.errorCode,errorMsg,data
+      if(res.errorCode != 0){
+        console.log(res);
+      }else{
+        this.setState({
+          topArticle:res.data
+        })
+      }
+    }).catch( error => {
+        console.log(error);
     })
   }
 
   // 请求文章列表
   getArticleList = (num) => {
-    const pageNum = typeof(num) === 'number' ? num : typeof(this.props.pageNum) === 'undefined' ? 0 : (this.props.pageNum + 1);
-    this.props.dispatch(getArticle({pageNum})).then(res => {
-      
-    }).catch(err => {
-      console.log(err);
+    const pageNum = typeof(num) === 'number' ? num : typeof(this.state.pageNum) === 'undefined' ? 0 : (this.state.pageNum + 1);
+    // 这里需要添加判断是否时是后一页
+    if(this.state.pageCount === pageNum){
+      return;
+    }
+    // 用页码构造地址
+    const url = `/article/list/${pageNum}/json`;
+    fetch.get(url).then((res) => {
+      // res.errorCode,errorMsg,data
+      if(res.errorCode != 0){
+        console.log(res);
+      }else{
+        let articles;
+        // 如果不是刷新第一页,则concat数组
+        if(pageNum !== 0){
+          articles = this.state.article.concat(res.data.datas);
+        }else{
+          articles = res.data.datas;
+        }
+        this.setState({
+          article:articles,
+          pageCount:res.data.pageCount,
+          pageNum
+        })
+      }
+    }).catch( error => {
+      console.log(error);
     })
   }
 
   // 请求banner数据
   getBannerDate = () => {
-    this.props.dispatch(getBanner()).then(res => {
-      
-    }).catch(err => {
-      console.log(err);
+    fetch.get('/banner/json').then((res) => {
+      // res.errorCode,errorMsg,data
+      if(res.errorCode != 0){
+        console.log(res)
+      }else{
+        this.setState({
+          banner:res.data
+        })
+      }
+    }).catch( error => {
+      console.log(error);
     })
   }
 
@@ -102,11 +140,41 @@ class Home extends React.Component{
   handleCollect = (index) => {
     // 判断是否登录
     if(this.props.score && this.props.score.userId){
-      this.props.dispatch(collectArticle({index})).then(res => {
-        this.toast.show(res.msg);
-      }).catch(err => {
-        this.toast.show(err.msg);
-        console.log(err);
+      let newList,collectItem;
+      // 文章是由推荐和普通的列表
+      if(index < this.state.topArticle.length){
+        newList = JSON.parse(JSON.stringify(this.state.topArticle));
+        collectItem = newList[index];
+      }else{
+          newList = JSON.parse(JSON.stringify(this.state.article));
+          collectItem = newList[index-state.topArticle.length];
+      }
+      let id = collectItem.id;
+      let url = collectItem.collect ? `/lg/uncollect_originId/${id}/json` : `/lg/collect/${id}/json`;
+      let toastInfo = collectItem.collect ? '取消收藏成功' : '收藏成功';
+      collectItem.collect = !collectItem.collect;
+      // 发送ajax
+      fetch.post(url).then((res) => {
+        // res.errorCode,errorMsg,data
+        if(res.errorCode != 0){
+          console.log(res);
+          this.toast.show(res.errorMsg)
+        }else{
+          // 更新对应的artcle数组
+          if(index < this.state.topArticle.length){
+            this.setState({
+              topArticle: newList
+            });
+          }else{
+            this.setState({
+              article: newList
+            });
+          }
+          this.toast.show(toastInfo);
+        }
+      }).catch( error => {
+        console.log(error);
+        this.toast.show('网络错误!');
       })
     }else{
       // 跳转到登录页
@@ -121,8 +189,8 @@ class Home extends React.Component{
     return (
       <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
         {/* 文章区域（推荐文章,文章列表） */}
-        <ArticleList articles={[...this.props.topArticle,...this.props.article]} loadmore={this.loadmore} reload={this.onRefresh} 
-          pageCount={this.props.pageCount} pageNum={this.props.pageNum} navigation={ navigation } handleCollect={this.handleCollect}>
+        <FlatList articles={[...this.state.topArticle,...this.state.article]} loadmore={this.loadmore} reload={this.onRefresh} 
+          pageCount={this.state.pageCount} pageNum={this.state.pageNum} navigation={ navigation } handleCollect={this.handleCollect}>
           {/* 首页轮播图 */}
           <View style={styles.swiper}>
             {/* {this.state.swiperNode} */}
@@ -130,7 +198,7 @@ class Home extends React.Component{
               dot={<View style={[styles.swiper_dot,{ backgroundColor: this.props.theme.backgroundColor}]} />}
               activeDot={<View style={[styles.swiper_dot,{ backgroundColor: this.props.theme.themeColor}]} />}
               autoplay={true} >
-              {this.props.banner.reverse().map(item => {
+              {this.state.banner.reverse().map(item => {
                 return (
                   <View key={item.id} style={styles.swiper} >
                     <TouchableOpacity onPress={() => this.handleBanner(item)} >
@@ -146,7 +214,7 @@ class Home extends React.Component{
               })}
             </Swiper>
           </View>
-        </ArticleList>
+        </FlatList>
         <Toast ref={(toast) => this.toast = toast}></Toast>
       </View>
     );
@@ -154,11 +222,6 @@ class Home extends React.Component{
 };
 const mapStateToProps = state => {
   return {
-      banner: state.homeReducer.banner,
-      article: state.homeReducer.article,
-      topArticle: state.homeReducer.topArticle,
-      pageNum: state.homeReducer.pageNum,
-      pageCount: state.homeReducer.pageCount,
       theme: state.themeReducer.theme,
       score: state.baseReducer.score,
   }

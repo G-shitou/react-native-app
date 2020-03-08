@@ -16,7 +16,7 @@ import Tag from './tag';
 
 // 屏幕
 const win = Dimensions.get('window');
-class ArticleList extends React.PureComponent {
+class NewFlatList extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,9 +99,13 @@ class ArticleList extends React.PureComponent {
                         }
                         onScroll={this.onScroll}
                         data={this.props.articles}
-                        renderItem={({item,index}) => 
-                            <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
-                        }>
+                        renderItem={({item,index}) => {
+                            if(this.props.itemType === 'article'){
+                                return <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                            }else{
+                                return <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                            }
+                        }}>
                     </FlatList>
                 )}
                 {this.state.isShowToTop && <ActionButton
@@ -163,7 +167,7 @@ const mapStateToProps = state => {
         theme: state.themeReducer.theme,
     }
 }
-export default connect(mapStateToProps)(ArticleList)
+export default connect(mapStateToProps)(NewFlatList)
 
 const styles = StyleSheet.create({
     container:{
