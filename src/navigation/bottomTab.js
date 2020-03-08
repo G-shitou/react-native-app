@@ -13,6 +13,8 @@ import Square from '../page/square';
 import WeChat from '../page/weChat';
 import System from '../page/system';
 import Project from '../page/project';
+// 通用list页面
+import List from '../component/commonList';
 const Tab = createBottomTabNavigator();
 // Tab 导航设置
 class TabScreen extends React.Component {
@@ -51,8 +53,8 @@ class TabScreen extends React.Component {
                 }}
             >
                 <Tab.Screen name="首页" component={Home} />
-                <Tab.Screen name="广场" component={Square} />
-                <Tab.Screen name="公众号" component={TopTab} />
+                <Tab.Screen name="广场" component={List} initialParams={{sourceType:'square',itemType:'article'}} />
+                <Tab.Screen name="公众号" initialParams={{path:'wechat'}} component={TopTab} />
                 <Tab.Screen name="体系" component={System} />
                 <Tab.Screen name="项目" component={Project} />
             </Tab.Navigator>

@@ -33,13 +33,18 @@ class CommonList extends React.Component{
 
   // 请求文章列表
   getArticleList = (num) => {
+    const { navigation,route } = this.props;
+    console.log(route)
+    console.log(navigation);
     const pageNum = typeof(num) === 'number' ? num : typeof(this.state.pageNum) === 'undefined' ? 0 : (this.state.pageNum + 1);
     // 这里需要添加判断是否时是后一页
     if(this.state.pageCount === pageNum){
       return;
     }
     // 用页码构造地址
-    const url = this.props.sourceType === 'square' ? `/user_article/list/${pageNum}/json` : '';
+    const url = route.params.sourceType === 'square' ? `/user_article/list/${pageNum}/json` : (
+      route.params.sourceType === 'wechat' ? `/wxarticle/list/${route.params.id}/${pageNum}/json` : ''
+    );
     fetch.get(url).then((res) => {
         // res.errorCode,errorMsg,data
         if(res.errorCode != 0){
@@ -105,11 +110,11 @@ class CommonList extends React.Component{
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation,route } = this.props;
     return (
       <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
         {/* 文章区域（推荐文章,文章列表） */}
-        <FlatList articles={this.state.article} loadmore={this.loadmore} reload={() => this.getArticleList(0)} itemType={this.props.itemType}
+        <FlatList articles={this.state.article} loadmore={this.loadmore} reload={() => this.getArticleList(0)} itemType={route.params.itemType}
           pageCount={this.state.pageCount} pageNum={this.state.pageNum} navigation={ navigation } handleCollect={this.handleCollect}>
         </FlatList>
         <Toast ref={(toast) => this.toast = toast}></Toast>

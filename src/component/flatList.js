@@ -100,10 +100,11 @@ class NewFlatList extends React.PureComponent {
                         onScroll={this.onScroll}
                         data={this.props.articles}
                         renderItem={({item,index}) => {
+                            // 有重复文章，key需要特殊处理
                             if(this.props.itemType === 'article'){
-                                return <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                                return <ListItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                             }else{
-                                return <ListItem params={item} key={index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                                return <ListItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                             }
                         }}>
                     </FlatList>

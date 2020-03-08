@@ -23,6 +23,8 @@ class StackNavigator extends React.Component {
                 screenOptions={{                 //用来定制头部信息、根据自己需要更改
                     headerStyle: {
                         backgroundColor: this.props.theme.themeColor,
+                        borderBottomWidth: 0,
+                        elevation: 0,
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
