@@ -23,6 +23,8 @@ class TopTab extends React.Component{
     let url;
     if(route.params.path === 'wechat'){
       url = '/wxarticle/chapters/json';
+    }else if(route.params.path === 'project'){
+      url = '/project/tree/json';
     }
     fetch.get(url).then(res => {
       console.log('toptab路由更新')
@@ -63,7 +65,8 @@ class TopTab extends React.Component{
           },
         }}>
           { this.state.routerArry.map(item => {
-              return <Tab.Screen name={item.name} component={List} key={item.id} initialParams={{sourceType:route.params.path,id:item.id,itemType:'article'}} />
+              return <Tab.Screen name={item.name} component={List} key={item.id} 
+              initialParams={{sourceType:route.params.path,id:item.id,itemType:route.params.path === 'project' ?  'project' :'article'}} />
             })
           }
         </Tab.Navigator> : <View style={{flex:1,backgroundColor:this.props.theme.backgroundColor}}>

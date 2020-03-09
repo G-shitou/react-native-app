@@ -8,7 +8,8 @@ import {
     TouchableHighlight,
     ActivityIndicator,
     RefreshControl,
-    Dimensions
+    Dimensions,
+    Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ActionButton from 'react-native-action-button';
@@ -91,9 +92,9 @@ class NewFlatList extends React.PureComponent {
                         ListHeaderComponent={this.props.children}
                         ListFooterComponent={
                             <View style={styles.loading}>
-                                {(typeof(this.props.pageCount) === 'undefined' || this.props.pageNum !== this.props.pageCount) && <ActivityIndicator size="small" color={this.props.theme.loadingColor}/>}
+                                {(typeof(this.props.pageCount) === 'undefined' || this.props.pageNum < this.props.pageCount -1 ) && <ActivityIndicator size="small" color={this.props.theme.loadingColor}/>}
                                 <Text style={[styles.loading_text,{color:this.props.theme.subColor}]}>
-                                    {typeof(this.props.pageCount) === 'undefined' ? '正在加载更多数据' : this.props.pageNum === this.props.pageCount ? '没有更多数据了' : '正在加载更多数据'}
+                                    {typeof(this.props.pageCount) === 'undefined' ? '正在加载更多数据' : this.props.pageNum < this.props.pageCount - 1 ? '正在加载更多数据' : '已经到底啦!'}
                                 </Text>
                             </View>
                         }
@@ -101,10 +102,10 @@ class NewFlatList extends React.PureComponent {
                         data={this.props.articles}
                         renderItem={({item,index}) => {
                             // 有重复文章，key需要特殊处理
-                            if(this.props.itemType === 'article'){
-                                return <ListItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                            if(this.props.itemType === 'project'){
+                                return <ProjectItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                             }else{
-                                return <ListItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
+                                return <ArticleItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                             }
                         }}>
                     </FlatList>
@@ -125,7 +126,7 @@ class NewFlatList extends React.PureComponent {
     }
 };
 
-class ListItem extends React.PureComponent {
+class ArticleItem extends React.PureComponent {
     render() {
       const item = this.props.params;
       return (
@@ -163,6 +164,27 @@ class ListItem extends React.PureComponent {
     }
 }
 
+class ProjectItem extends React.PureComponent {
+    render(){
+        const item = this.props.params;
+        return (
+            <TouchableHighlight onPress={() => this.props.onHandle(item)} >
+                <View style={[styles.project,{borderBottomColor: this.props.theme.borderColor,backgroundColor:this.props.theme.backgroundColor}]}>
+                    <Image style={styles.project_img} source={{uri: item.envelopePic}} loadingIndicatorSource={require('../assets/img/loading.jpg')}></Image>
+                    <View style={styles.project_content}>
+                        <Text numberOfLines={2} style={[styles.project_title,{color:this.props.theme.titleColor}]}>{item.title}</Text>
+                        <Text numberOfLines={8} style={[styles.project_desc,{color:this.props.theme.subColor}]}>{item.desc}</Text>
+                        <View style={styles.project_sub}>
+                            <Text style={{flex:1,textAlign:'left',color:this.props.theme.subColor}}>{item.author + '  ' + item.niceDate}</Text>
+                            <Icon name='heart' size={16} color={item.collect ? '#FF6262': this.props.theme.subColor} onPress={this.props.handleCollect}/>
+                        </View>
+                    </View>
+                </View>
+            </TouchableHighlight> 
+        )
+    }
+}
+
 const mapStateToProps = state => {
     return {
         theme: state.themeReducer.theme,
@@ -184,7 +206,7 @@ const styles = StyleSheet.create({
         paddingLeft:18,
         paddingRight:18,
         borderTopWidth:0,
-        borderBottomWidth:1,
+        borderBottomWidth:0.5,
         // borderBottomColor:'#D9D9D9'
     },
     article_middle:{
@@ -238,5 +260,41 @@ const styles = StyleSheet.create({
         // color: 'gray',
         fontSize:14,
         textAlign:'center'
+    },
+    project:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
+        height:220,
+        padding:10,
+        // paddingRight:18,
+        borderTopWidth:0,
+        borderBottomWidth:0.5,
+    },
+    project_img:{
+        height:200,
+        width:130,
+    },
+    project_content:{
+        flex:1,
+        height:200,
+        display:'flex',
+        justifyContent:'space-between',
+        alignItems:'flex-start',
+        paddingLeft:10,
+        paddingRight:10,
+    },
+    project_title:{
+        fontSize:16,
+    },
+    project_desc:{
+        fontSize:14,
+    },
+    project_sub:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
     }
 });

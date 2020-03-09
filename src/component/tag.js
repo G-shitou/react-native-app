@@ -10,8 +10,8 @@ export default class ArticleList extends React.Component {
         super(props);
         this.state = {
             height:20,
-            lineHeight:18,
-            fontSize:14,
+            lineHeight:17,
+            fontSize:12,
             color:'red',
             marginRight:5,
             paddingLeft:3,
@@ -19,7 +19,6 @@ export default class ArticleList extends React.Component {
             borderColor:'red',
             borderWidth:1,
             borderRadius:3,
-            
         };
     }
     render() {

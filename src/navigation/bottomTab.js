@@ -54,7 +54,7 @@ class TabScreen extends React.Component {
                 <Tab.Screen name="广场" component={List} initialParams={{sourceType:'square',itemType:'article'}} />
                 <Tab.Screen name="公众号" initialParams={{path:'wechat'}} component={TopTab} />
                 <Tab.Screen name="体系" component={System} />
-                <Tab.Screen name="项目" component={Project} />
+                <Tab.Screen name="项目" initialParams={{path:'project'}} component={TopTab} />
             </Tab.Navigator>
         );
     }
