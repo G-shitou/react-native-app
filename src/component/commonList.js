@@ -34,8 +34,6 @@ class CommonList extends React.Component{
   // 请求文章列表
   getArticleList = (num) => {
     const { navigation,route } = this.props;
-    console.log(route)
-    console.log(navigation);
     const pageNum = typeof(num) === 'number' ? num : typeof(this.state.pageNum) === 'undefined' ? 0 : (this.state.pageNum + 1);
     // 这里需要添加判断是否时是后一页
     if(this.state.pageCount === pageNum){

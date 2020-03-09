@@ -25,6 +25,7 @@ class StackNavigator extends React.Component {
                         backgroundColor: this.props.theme.themeColor,
                         borderBottomWidth: 0,
                         elevation: 0,
+                        height:45,
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {

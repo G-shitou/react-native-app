@@ -43,11 +43,9 @@ class TabScreen extends React.Component {
                 tabBarOptions={{
                     activeTintColor: this.props.theme.themeColor,
                     inactiveTintColor: this.props.theme.subColor,
-                    // activeBackgroundColor:this.props.theme.backgroundColor,
-                    // inactiveBackgroundColor:this.props.theme.backgroundColor,
                     style:{
-                        height:60,
-                        paddingBottom:5,
+                        height:50,
+                        paddingBottom:0,
                         backgroundColor:this.props.theme.backgroundColor
                     }
                 }}
