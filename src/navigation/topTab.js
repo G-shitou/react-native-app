@@ -4,6 +4,8 @@ import fetch from '../utils/fetch';
 import { ActivityIndicator, View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import List from '../component/commonList';
+import System from '../page/system';
+import Navigate from '../page/navigate';
 // topTab navigator
 class TopTab extends React.Component{
   constructor(props){
@@ -13,8 +15,26 @@ class TopTab extends React.Component{
     }
   }
   UNSAFE_componentWillMount(){
-    // 请求路由
-    this.getRouter();
+    if(this.props.route.params.path === 'systemNavigation'){
+      this.setState({
+        routerArry:[{
+          id: 1,
+          name: "体系",
+          component:'system'
+        },{
+          id:2,
+          name:"导航",
+          component:'navigate'
+        }]
+      })
+    }else if(this.props.route.params.path === 'system'){
+      this.setState({
+        routerArry:this.props.route.params.item.children
+      })
+    } else {
+      // 请求路由
+      this.getRouter();
+    }
   }
 
   // 请求路由
@@ -65,8 +85,14 @@ class TopTab extends React.Component{
           },
         }}>
           { this.state.routerArry.map(item => {
-              return <Tab.Screen name={item.name} component={List} key={item.id} 
-              initialParams={{sourceType:route.params.path,id:item.id,itemType:route.params.path === 'project' ?  'project' :'article'}} />
+              // 其他toptab
+              if(route.params.path !== 'systemNavigation'){
+                return <Tab.Screen name={item.name} component={List} key={item.id} 
+                initialParams={{sourceType:route.params.path,id:item.id,itemType:route.params.path === 'project' ?  'project' :'article'}} />
+              }else{
+                // 体系与导航
+                return <Tab.Screen name={item.name} component={item.component === 'system' ? System : Navigate} key={item.id} />
+              }
             })
           }
         </Tab.Navigator> : <View style={{flex:1,backgroundColor:this.props.theme.backgroundColor}}>

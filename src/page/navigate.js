@@ -1,10 +1,10 @@
 import React from 'react';
-import List from '../component/commonList';
 import {
   StyleSheet,
+  Text,
 } from 'react-native';
 
-export default class Square extends React.Component{
+export default class Navigate extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -19,7 +19,7 @@ export default class Square extends React.Component{
   render() {
     const { navigation } = this.props;
     return (
-     <List navigation={ navigation } itemType='article' sourceType='square'></List> 
+     <Text>navigate</Text>
     )
   }
 };

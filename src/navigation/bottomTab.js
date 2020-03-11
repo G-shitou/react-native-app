@@ -9,10 +9,6 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import TopTab from './topTab';
 // 引入页面
 import Home from '../page/home';
-import Square from '../page/square';
-import WeChat from '../page/weChat';
-import System from '../page/system';
-import Project from '../page/project';
 // 通用list页面
 import List from '../component/commonList';
 const Tab = createBottomTabNavigator();
@@ -32,7 +28,7 @@ class TabScreen extends React.Component {
                             iconName = 'appstore-o';
                         } else if (route.name === '公众号') {
                             iconName = 'message1'
-                        } else if (route.name === '体系') {
+                        } else if (route.name === '体系导航') {
                             iconName = 'codepen';
                         } else {
                             iconName = 'profile'
@@ -53,7 +49,7 @@ class TabScreen extends React.Component {
                 <Tab.Screen name="首页" component={Home} />
                 <Tab.Screen name="广场" component={List} initialParams={{sourceType:'square',itemType:'article'}} />
                 <Tab.Screen name="公众号" initialParams={{path:'wechat'}} component={TopTab} />
-                <Tab.Screen name="体系" component={System} />
+                <Tab.Screen name="体系导航" initialParams={{path:'systemNavigation'}} component={TopTab} />
                 <Tab.Screen name="项目" initialParams={{path:'project'}} component={TopTab} />
             </Tab.Navigator>
         );

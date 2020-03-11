@@ -10,7 +10,9 @@ import TabScreen from './bottomTab';
 // 引入页面
 import Search from '../page/search';
 import Webview from '../page/webview';
-import Login from '../page/login'
+import Login from '../page/login';
+// toptab 复用
+import Toptab from './topTab';
 const Stack = createStackNavigator();
 // Stack 导航设置
 class StackNavigator extends React.Component {
@@ -57,6 +59,10 @@ class StackNavigator extends React.Component {
                         title: route.params.title
                     })}></Stack.Screen>
                 <Stack.Screen name="webview" component={Webview} 
+                    options={({ route, navigation }) => ({
+                        title: route.params.title
+                    })}></Stack.Screen>
+                <Stack.Screen name="toptab" component={Toptab} 
                     options={({ route, navigation }) => ({
                         title: route.params.title
                     })}></Stack.Screen>

@@ -42,7 +42,7 @@ class CommonList extends React.Component{
     // 用页码构造地址
     const url = route.params.sourceType === 'square' ? `/user_article/list/${pageNum}/json` : (
       route.params.sourceType === 'wechat' ? `/wxarticle/list/${route.params.id}/${pageNum}/json` : (
-      route.params.sourceType === 'project' ? `/project/list/${pageNum}/json?cid=${route.params.id}` : ''
+      route.params.sourceType === 'project' ? `/project/list/${pageNum}/json?cid=${route.params.id}` : `/article/list/${pageNum}/json?cid=${route.params.id}`
     ));
     fetch.get(url).then((res) => {
         // res.errorCode,errorMsg,data
