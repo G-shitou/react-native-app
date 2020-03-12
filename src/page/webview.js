@@ -5,10 +5,16 @@ import {
     ProgressViewIOS,
     ProgressBarAndroid,
     View,
-    Platform
+    Platform,
+    Linking,
+    Dimensions
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+// 引入字体图标组件
+import Icon from 'react-native-vector-icons/AntDesign'
 
+// 屏幕
+const win = Dimensions.get('window');
 class Web extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +22,33 @@ class Web extends React.Component {
             progress:0
         };
     }
+
+    UNSAFE_componentWillMount(){
+        // 定义header 右上方icon
+        // headerTitle: props => <Text numberOfLines={1}>{route.params.title}</Text>,
+        this.props.navigation.setOptions({ headerRight: () => <View style={[styles.webviewHeader,{backgroundColor:this.props.theme.themeColor}]}>
+            <Icon name='ie' style={[styles.headerRight,{fontSize:23}]} onPress={this.openUrl} />
+            <Icon name='sharealt' style={styles.headerRight} onPress={this.onShare} />
+        </View>,headerTitleStyle:{width:win.width-180} });
+    }
+
+    // 调用浏览器打开页面
+    openUrl = () => {
+        const {route} = this.props;
+        Linking.canOpenURL(route.params.url).then(supported => {         
+            if (!supported) {            
+                console.warn('Can\'t handle url: ' + route.params.url);            
+            } else {            
+                return Linking.openURL(route.params.url);            
+            }
+        }).catch(err => console.error('An error occurred',route.params.url));   
+    }
+    
+    // 分享文章
+    onShare = (route) => {
+        console.log(1);
+    }
+
     render() {
         const { navigation,route } = this.props;
         const url = route.params.url;
@@ -47,5 +80,18 @@ export default connect(mapStateToProps)(Web)
 const styles = StyleSheet.create({
     container:{
         flex:1
-    }
+    },
+    webviewHeader:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        paddingLeft:20,
+        // paddingRight:20,
+    },
+    headerRight: {
+        color: '#fff',
+        fontSize: 20,
+        marginRight: 20,
+    },
 });

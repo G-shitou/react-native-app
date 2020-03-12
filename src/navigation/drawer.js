@@ -10,12 +10,12 @@ import MenuList from '../page/drawerMenu';
 const Drawer = createDrawerNavigator();
 function DrawerScreen() {
     return (
-        <Drawer.Navigator initialRouteName="首页"
+        <Drawer.Navigator initialRouteName="home"
             drawerContent={({ state, navigation, descriptors, progress }) => {
                 return <MenuList navigation={navigation}></MenuList>
             }}>
             {/* 抽屉导航 */}
-            <Drawer.Screen name="首页" component={StackNavigator} />
+            <Drawer.Screen name="home" component={StackNavigator} />
         </Drawer.Navigator>
     )
 }

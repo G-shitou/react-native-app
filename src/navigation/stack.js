@@ -11,15 +11,17 @@ import TabScreen from './bottomTab';
 import Search from '../page/search';
 import Webview from '../page/webview';
 import Login from '../page/login';
+import Share from '../page/share';
 // toptab 复用
 import Toptab from './topTab';
 const Stack = createStackNavigator();
+const tabNames = ['首页','广场','公众号','体系导航','项目'];
 // Stack 导航设置
 class StackNavigator extends React.Component {
     render(){
         return (
             <Stack.Navigator
-                initialRouteName="首页"     //作为初始化页面、不写的话默认第一个screen为初始化页面
+                initialRouteName="home"     //作为初始化页面、不写的话默认第一个screen为初始化页面
                 mode='modal'
                 headerMode='float'
                 screenOptions={{                 //用来定制头部信息、根据自己需要更改
@@ -27,24 +29,24 @@ class StackNavigator extends React.Component {
                         backgroundColor: this.props.theme.themeColor,
                         borderBottomWidth: 0,
                         elevation: 0,
-                        height:45,
+                        // height:45,
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
                         fontSize: 18,
-                    },
+                    }
                 }}>
 
-                <Stack.Screen name="首页" component={TabScreen}
+                <Stack.Screen name="home" component={TabScreen}
                     options={({ route, navigation }) => ({
-                        title: route && route.state && route.state.routeNames[route.state.index] || '首页',
-                        headerRight: () => (
-                            <Icon
-                                name='search1'
-                                style={styles.headerRight}
-                                onPress={() => navigation.navigate('搜索')}
-                            />
-                        ),
+                        title: route && route.state && tabNames[route.state.index] || '首页',
+                        headerRight: () => {
+                            if(route && route.state && route.state.index == 1){
+                                return <Icon name='plus' style={styles.headerRight} onPress={() => navigation.navigate('share',{title:'分享文章'})} />
+                            }else{
+                                return <Icon name='search1' style={styles.headerRight} onPress={() => navigation.navigate('search',{title:'搜索'})} />
+                            }
+                        },
                         headerLeft: () => (
                             <Icon
                                 name='bars'
@@ -53,19 +55,11 @@ class StackNavigator extends React.Component {
                             />
                         )
                     })} />
-                <Stack.Screen name="搜索" component={Search}></Stack.Screen>
-                <Stack.Screen name="login" component={Login}
-                    options={({ route, navigation }) => ({
-                        title: route.params.title
-                    })}></Stack.Screen>
-                <Stack.Screen name="webview" component={Webview} 
-                    options={({ route, navigation }) => ({
-                        title: route.params.title
-                    })}></Stack.Screen>
-                <Stack.Screen name="toptab" component={Toptab} 
-                    options={({ route, navigation }) => ({
-                        title: route.params.title
-                    })}></Stack.Screen>
+                <Stack.Screen name="search" component={Search} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
+                <Stack.Screen name="login" component={Login} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
+                <Stack.Screen name="webview" component={Webview} options={({ route, navigation }) => ({title: route.params.title,})}></Stack.Screen>
+                <Stack.Screen name="toptab" component={Toptab} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
+                <Stack.Screen name="share" component={Share} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
             </Stack.Navigator>
         )
     }
@@ -89,5 +83,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 20,
         marginRight: 0
-    }
+    },
 });

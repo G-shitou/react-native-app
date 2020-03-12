@@ -17,24 +17,25 @@ class TabScreen extends React.Component {
     render(){
         return (
             <Tab.Navigator
-                initialRouteName={'首页'}
+                initialRouteName={'home'}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         const colors = focused ? this.props.theme.themeColor : this.props.theme.subColor;
                         let iconName;
-                        if (route.name === '首页') {
+                        if (route.name === 'home') {
                             iconName = 'home'
-                        } else if (route.name === '广场') {
+                        } else if (route.name === 'square') {
                             iconName = 'appstore-o';
-                        } else if (route.name === '公众号') {
+                        } else if (route.name === 'wechat') {
                             iconName = 'message1'
-                        } else if (route.name === '体系导航') {
+                        } else if (route.name === 'systemNavigation') {
                             iconName = 'codepen';
                         } else {
                             iconName = 'profile'
                         }
                         return <Icon style={{marginTop:5}} name={iconName} size={25} color={colors} />;
-                    }
+                    },
+                    title:route.params.title
                 })}
                 tabBarOptions={{
                     activeTintColor: this.props.theme.themeColor,
@@ -46,11 +47,11 @@ class TabScreen extends React.Component {
                     }
                 }}
             >
-                <Tab.Screen name="首页" component={Home} />
-                <Tab.Screen name="广场" component={List} initialParams={{sourceType:'square',itemType:'article'}} />
-                <Tab.Screen name="公众号" initialParams={{path:'wechat'}} component={TopTab} />
-                <Tab.Screen name="体系导航" initialParams={{path:'systemNavigation'}} component={TopTab} />
-                <Tab.Screen name="项目" initialParams={{path:'project'}} component={TopTab} />
+                <Tab.Screen name="home" component={Home} initialParams={{title:'首页'}}/>
+                <Tab.Screen name="square" component={List} initialParams={{sourceType:'square',itemType:'article',title:'广场'}} />
+                <Tab.Screen name="wechat" initialParams={{path:'wechat',title:'公众号'}} component={TopTab} />
+                <Tab.Screen name="systemNavigation" initialParams={{path:'systemNavigation',title:'体系导航'}} component={TopTab} />
+                <Tab.Screen name="project" initialParams={{path:'project',title:'项目'}} component={TopTab} />
             </Tab.Navigator>
         );
     }
