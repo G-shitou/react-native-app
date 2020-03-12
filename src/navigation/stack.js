@@ -12,6 +12,7 @@ import Search from '../page/search';
 import Webview from '../page/webview';
 import Login from '../page/login';
 import Share from '../page/share';
+import CommonList from '../component/commonList';
 // toptab 复用
 import Toptab from './topTab';
 const Stack = createStackNavigator();
@@ -60,6 +61,7 @@ class StackNavigator extends React.Component {
                 <Stack.Screen name="webview" component={Webview} options={({ route, navigation }) => ({title: route.params.title,})}></Stack.Screen>
                 <Stack.Screen name="toptab" component={Toptab} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
                 <Stack.Screen name="share" component={Share} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
+                <Stack.Screen name="commonList" component={CommonList} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
             </Stack.Navigator>
         )
     }

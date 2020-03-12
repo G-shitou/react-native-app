@@ -42,9 +42,12 @@ class CommonList extends React.Component{
     // 用页码构造地址
     const url = route.params.sourceType === 'square' ? `/user_article/list/${pageNum}/json` : (
       route.params.sourceType === 'wechat' ? `/wxarticle/list/${route.params.id}/${pageNum}/json` : (
-      route.params.sourceType === 'project' ? `/project/list/${pageNum}/json?cid=${route.params.id}` : `/article/list/${pageNum}/json?cid=${route.params.id}`
-    ));
-    fetch.get(url).then((res) => {
+      route.params.sourceType === 'project' ? `/project/list/${pageNum}/json?cid=${route.params.id}` : (
+      route.params.sourceType === 'search' ? `/article/query/${pageNum}/json` : `/article/list/${pageNum}/json?cid=${route.params.id}`
+    )));
+    // 搜索需要用post请求
+    if(route.params.sourceType === 'search'){
+      fetch.post(url,{k:route.params.title}).then((res) => {
         // res.errorCode,errorMsg,data
         if(res.errorCode != 0){
             console.log(res);
@@ -62,10 +65,34 @@ class CommonList extends React.Component{
             pageNum
           })
         }
-    }).catch( error => {
-      console.log(error);
-      this.toast.show('网络错误!');
-    })
+      }).catch( error => {
+        console.log(error);
+        this.toast.show('网络错误!');
+      })
+    }else{
+      fetch.get(url).then((res) => {
+          // res.errorCode,errorMsg,data
+          if(res.errorCode != 0){
+              console.log(res);
+          }else{
+            let articles;
+            // 如果不是刷新第一页,则concat数组
+            if(pageNum !== 0){
+                articles = this.state.article.concat(res.data.datas);
+            }else{
+                articles = res.data.datas;
+            }
+            this.setState({
+              article:articles,
+              pageCount:res.data.pageCount,
+              pageNum
+            })
+          }
+      }).catch( error => {
+        console.log(error);
+        this.toast.show('网络错误!');
+      })
+    }
   }
 
   // 加载更多

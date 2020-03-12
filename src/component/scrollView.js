@@ -43,8 +43,8 @@ class NewScrollView extends React.Component {
   }
 
   // 随机生成颜色
-  initColor = () => {
-    let color = colors[ Math.floor(Math.random()*10)]
+  initColor = (index) => {
+    let color = colors[index%colors.length];
     return color;
   }
 
@@ -108,9 +108,9 @@ class NewScrollView extends React.Component {
                     return <View key={item.cid} style={[styles.navigate_item,{borderBottomColor: this.props.theme.borderColor,backgroundColor:this.props.theme.backgroundColor}]}>
                         <Text style={{color:this.props.theme.titleColor,fontSize:16,marginTop:10,marginBottom:10}}>{item.name}</Text>
                         <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-start',alignItems:'center',flexWrap:'wrap',marginBottom:5}}>
-                            {item.articles.map(item => 
+                            {item.articles.map((item,index) => 
                                 <TouchableHighlight key={item.id} onPress={() => this.onHandle(item)}>
-                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor()}]}>{item.title}</Text>
+                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor(index)}]}>{item.title}</Text>
                                 </TouchableHighlight>)}
                         </View>
                     </View>
