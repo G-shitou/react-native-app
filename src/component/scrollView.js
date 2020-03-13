@@ -110,7 +110,7 @@ class NewScrollView extends React.Component {
                         <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-start',alignItems:'center',flexWrap:'wrap',marginBottom:5}}>
                             {item.articles.map((item,index) => 
                                 <TouchableHighlight key={item.id} onPress={() => this.onHandle(item)}>
-                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor(index),backgroundColor:this.props.theme.subColor}]}>{item.title}</Text>
+                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor(index),backgroundColor:this.props.theme.tagColor}]}>{item.title}</Text>
                                 </TouchableHighlight>)}
                         </View>
                     </View>

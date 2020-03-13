@@ -1,5 +1,6 @@
 export default {
     USERINFO: 'USERINFO',
     SCORE: 'SCORE',
-    THEME_TYPE:'THEME_TYPE',
+    THEME:'THEME',
+    THEME_COLOR: 'THEME_COLOR'
 }

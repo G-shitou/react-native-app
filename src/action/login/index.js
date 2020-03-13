@@ -12,6 +12,20 @@ export function score(score) {
         score
     }
 }
+// 皮肤
+export function theme(theme) {
+    return {
+        type: type.THEME,
+        theme
+    }
+}
+// 主题颜色
+export function themeColor(themeColor) {
+    return {
+        type: type.THEME_COLOR,
+        themeColor
+    }
+}
 // 登录
 export function login(params){
     return (dispatch, getState) => {

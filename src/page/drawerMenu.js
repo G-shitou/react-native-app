@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../action/login'
+import { logout,theme } from '../action/login';
+import AsyncStorage from '@react-native-community/async-storage';
+import config from '../config';
 import {
   StyleSheet,
   ScrollView,
@@ -18,23 +20,44 @@ class MenuList extends React.Component{
     this.state = {
       menuList:[{
         icon:'pay-circle-o1',
-        title:'我的积分'
+        title:'我的积分',
+        path:'score',
       },{
         icon:'hearto',
-        title:'我的收藏'
+        title:'我的收藏',
+        path:'shoucang',
       },{
         icon:'sharealt',
-        title:'我的分享'
+        title:'我的分享',
+        path:'fenxiang',
       },{
         icon:'calendar',
         title:'TODO'
       },{
         icon:'cloudo',
-        title:'夜间模式'
+        title:'主题更换',
+        path:'theme',
       },{
         icon:'setting',
         title:'系统设置'
       }]
+    }
+  }
+
+
+  // 点击menuList  item
+  handleClick = item => {
+    // 更换主题
+    if(item.path === 'theme'){
+      // 读取本地储存的皮肤信息,初始化themeState
+      const _theme = config.theme;
+      let themeType;
+      AsyncStorage.getItem('themeType').then(res => {
+        themeType = res === 'day' ? 'night' : res === 'night' ? 'day' : 'night';
+        AsyncStorage.setItem('themeType',themeType).then(res => {
+          this.props.dispatch(theme(_theme[themeType]));
+        })
+      })
     }
   }
 
@@ -71,7 +94,7 @@ class MenuList extends React.Component{
             <Text style={{color:'#fff',fontSize:14,marginBottom:10}}>{`等级:${'~ '}  排名:${'~'}`}</Text>}
         </View>
         {this.state.menuList.map(item => (
-          <TouchableHighlight key={item.title}>
+          <TouchableHighlight key={item.title} onPress={() => this.handleClick(item)}>
             <View style={[styles.list,{backgroundColor:this.props.theme.backgroundColor}]}>
               <Icon style={styles.list_icon} name={item.icon} size={20} color={this.props.theme.themeColor}/>
               <Text style={[styles.list_title,{color:this.props.theme.titleColor}]} >{item.title}</Text>

@@ -79,7 +79,7 @@ class Search extends React.Component{
         <Text style={[styles.content_title,{color:this.props.theme.themeColor}]}>热门搜索</Text>
         <View style={styles.hot_content}>
           {this.state.hotSearch.length > 0 && this.state.hotSearch.map((item,index) => {
-            return <Text style={[styles.hot_tag,{color:this.initColor(index),backgroundColor:this.props.theme.subColor}]} key={item.id} onPress={() => this.searchHot(item)}>{item.name}</Text>
+            return <Text style={[styles.hot_tag,{color:this.initColor(index),backgroundColor:this.props.theme.tagColor}]} key={item.id} onPress={() => this.searchHot(item)}>{item.name}</Text>
           })}
         </View>
       </View>

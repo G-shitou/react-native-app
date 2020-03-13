@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetch from '../utils/fetch';
-import { login } from '../action/login'
+import { login, theme } from '../action/login'
 import Swiper from 'react-native-swiper';
 import CookieManager from '@react-native-community/cookies';
+import AsyncStorage from '@react-native-community/async-storage';
+import config from '../config';
 import {
   StyleSheet,
   View,
@@ -38,6 +40,16 @@ class Home extends React.Component{
       }
       this.onRefresh();
     });
+    // 读取本地储存的皮肤信息,初始化themeState
+    const _theme = config.theme;
+    let themeType;
+    AsyncStorage.getItem('themeType').then(res => {
+        themeType = res || 'day';
+        // theme[themeType]
+        console.log(themeType)
+        console.log(_theme[themeType])
+        this.props.dispatch(theme(_theme[themeType]))
+    })
   }
 
 
