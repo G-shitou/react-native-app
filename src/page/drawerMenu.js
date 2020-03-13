@@ -6,9 +6,11 @@ import {
   ScrollView,
   View,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Toast from '../component/toast';
 
 class MenuList extends React.Component{
   constructor(props){
@@ -44,11 +46,15 @@ class MenuList extends React.Component{
 
   // 点击登出
   logout = () => {
-    this.props.dispatch(logout()).then(res=>{
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    })
+    Alert.alert('温馨提示','确定退出吗？',[
+      {text:'取消',style: 'cancel'},
+      {text:'确定',onPress: () => this.props.dispatch(logout()).then(res=>{
+        this.toast.show('退出成功!')
+      }).catch(err => {
+        this.toast.show('网络错误!')
+        console.log(err);
+      })}
+    ])
   }
 
   render() {
@@ -66,18 +72,19 @@ class MenuList extends React.Component{
         </View>
         {this.state.menuList.map(item => (
           <TouchableHighlight key={item.title}>
-            <View style={styles.list}>
+            <View style={[styles.list,{backgroundColor:this.props.theme.backgroundColor}]}>
               <Icon style={styles.list_icon} name={item.icon} size={20} color={this.props.theme.themeColor}/>
               <Text style={[styles.list_title,{color:this.props.theme.titleColor}]} >{item.title}</Text>
             </View>
           </TouchableHighlight>
         ))}
-        <TouchableHighlight onPress={this.logout}>
-            <View style={styles.list}>
+        {this.props.score.userId && <TouchableHighlight onPress={this.logout}>
+            <View style={[styles.list,{backgroundColor:this.props.theme.backgroundColor}]}>
               <Icon style={styles.list_icon} name='logout' size={20} color={this.props.theme.themeColor}/>
               <Text style={[styles.list_title,{color:this.props.theme.titleColor}]} >退出登录</Text>
             </View>
-          </TouchableHighlight>
+          </TouchableHighlight>}
+          <Toast ref={(toast) => this.toast = toast}></Toast>
       </ScrollView>
     );
   }

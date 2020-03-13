@@ -76,7 +76,7 @@ class NewFlatList extends React.PureComponent {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
                 {this.props.articles.length === 0 ? <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/> : (
                     <FlatList
                         ref={(flatList)=>this._flatList = flatList}
@@ -194,7 +194,7 @@ export default connect(mapStateToProps)(NewFlatList)
 
 const styles = StyleSheet.create({
     container:{
-        // flex:1
+        flex:1
     },
     article:{
         display:'flex',

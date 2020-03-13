@@ -69,7 +69,7 @@ class Search extends React.Component{
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
           <TextInput value={this.state.text} style={[styles.search_input,{color:this.props.theme.titleColor,borderColor:this.props.theme.borderColor}]} placeholder='发现更多干货' 
           placeholderTextColor={this.props.theme.subColor} onChangeText={text => this.changeValue(text)} 
@@ -79,7 +79,7 @@ class Search extends React.Component{
         <Text style={[styles.content_title,{color:this.props.theme.themeColor}]}>热门搜索</Text>
         <View style={styles.hot_content}>
           {this.state.hotSearch.length > 0 && this.state.hotSearch.map((item,index) => {
-            return <Text style={[styles.hot_tag,{color:this.initColor(index)}]} key={item.id} onPress={() => this.searchHot(item)}>{item.name}</Text>
+            return <Text style={[styles.hot_tag,{color:this.initColor(index),backgroundColor:this.props.theme.subColor}]} key={item.id} onPress={() => this.searchHot(item)}>{item.name}</Text>
           })}
         </View>
       </View>

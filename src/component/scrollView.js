@@ -79,8 +79,8 @@ class NewScrollView extends React.Component {
   render() {
     return (
       this.props.data.length > 0 ?
-        <View style={styles.container}>
-        <ScrollView style={styles.container}
+        <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
+        <ScrollView style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}
           ref={(scrollview)=>this._scrollview = scrollview}
           onScroll={this.onScroll}
           refreshControl={
@@ -110,7 +110,7 @@ class NewScrollView extends React.Component {
                         <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-start',alignItems:'center',flexWrap:'wrap',marginBottom:5}}>
                             {item.articles.map((item,index) => 
                                 <TouchableHighlight key={item.id} onPress={() => this.onHandle(item)}>
-                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor(index)}]}>{item.title}</Text>
+                                    <Text key={item.id} style={[styles.navigate_link,{color:this.initColor(index),backgroundColor:this.props.theme.subColor}]}>{item.title}</Text>
                                 </TouchableHighlight>)}
                         </View>
                     </View>
@@ -127,7 +127,8 @@ class NewScrollView extends React.Component {
                 <Icon style={styles.goUp} name="arrowup" size={24} color='#fff'/>
             )}
         />}
-        </View> : <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/>
+        </View> : <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
+          <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/></View>
     );
   }
 };
@@ -170,7 +171,6 @@ const styles = StyleSheet.create({
     borderBottomWidth:0.5,
   },
   navigate_link:{
-    backgroundColor:'#D9D9D9',
     fontSize:14,
     fontStyle:'italic',
     padding:5,

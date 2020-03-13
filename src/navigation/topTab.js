@@ -70,7 +70,7 @@ class TopTab extends React.Component{
           scrollEnabled: true,        //是否可以滚动标签栏目(当tab总数超过一屏)
           indicatorStyle: {         //指示器样式 height：0则不显示
             height: 2,
-            backgroundColor:this.props.theme.backgroundColor
+            backgroundColor:'#fff'
           },
           style: {                    //设置整个tabbar样式(背景颜色等)
             backgroundColor: this.props.theme.themeColor,
