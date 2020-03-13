@@ -104,7 +104,9 @@ class NewFlatList extends React.PureComponent {
                             // 有重复文章，key需要特殊处理
                             if(this.props.itemType === 'project'){
                                 return <ProjectItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
-                            }else{
+                            }else if(this.props.itemType === 'score'){
+                                return <ScoreItem params={item} key={item.id} theme={this.props.theme}></ScoreItem>
+                            } else {
                                 return <ArticleItem params={item} key={item.title + index} onHandle={this.handleArticle} theme={this.props.theme} handleCollect={() => this.handleCollect(index)}/>
                             }
                         }}>
@@ -126,6 +128,8 @@ class NewFlatList extends React.PureComponent {
     }
 };
 
+
+// 文章list item
 class ArticleItem extends React.PureComponent {
     render() {
       const item = this.props.params;
@@ -138,10 +142,10 @@ class ArticleItem extends React.PureComponent {
                     <View style={[styles.article_flex,{color:this.props.theme.subColor}]}>
                         {item.type == 1 && <Tag content='置顶' style={styles.tag_new}></Tag>}
                         {item.fresh && <Tag content='新' style={styles.tag_new}></Tag>}
-                        {item.tags.length !== 0 && item.tags.map(item => {
+                        {item.tags && item.tags.length !== 0 && item.tags.map(item => {
                             return (<Tag content={item.name} style={styles.tag_type} key={item.name}></Tag>)
                         })}
-                        <Text style={[styles.text_color_gray,{color:this.props.theme.subColor}]}>{item.author || item.shareUser}</Text>
+                        <Text style={[styles.text_color_gray,{color:this.props.theme.subColor}]}>{item.author || item.shareUser || '未知'}</Text>
                     </View>
                     <View style={[styles.article_fixed,{color:this.props.theme.subColor}]}>
                         <Text style={[styles.article_fixed,{color:this.props.theme.subColor}]}>{ item.niceDate }</Text>
@@ -154,7 +158,8 @@ class ArticleItem extends React.PureComponent {
                 {/* type */}
                 <View style={styles.article_top_bottom}>
                     <Text style={[styles.article_flex,{color:this.props.theme.subColor}]}>
-                        {item.chapterName ? `${item.superChapterName} / ${item.chapterName}` : item.superChapterName}
+                        { item.superChapterName ? (item.chapterName ? `${item.superChapterName} / ${item.chapterName}` : 
+                            item.superChapterName) : item.chapterName }
                     </Text>
                     <Icon name='heart' size={16} color={item.collect ? '#FF6262': this.props.theme.subColor} onPress={this.props.handleCollect}/>
                 </View>
@@ -164,6 +169,7 @@ class ArticleItem extends React.PureComponent {
     }
 }
 
+// 项目list item
 class ProjectItem extends React.PureComponent {
     render(){
         const item = this.props.params;
@@ -184,6 +190,23 @@ class ProjectItem extends React.PureComponent {
         )
     }
 }
+
+// 签到积分list item
+class ScoreItem extends React.PureComponent {
+    render(){
+        const item = this.props.params;
+        return (
+            <View style={[styles.score,{borderBottomColor: this.props.theme.borderColor,backgroundColor:this.props.theme.backgroundColor}]}>
+                <View style={{height:40,flex:1}}>
+                    <Text style={{color:this.props.theme.titleColor,fontSize:17}}>{item.reason}</Text>
+                    <Text style={{color:this.props.theme.subColor,fontSize:14}} numberOfLines={1}>{item.desc}</Text>
+                </View>
+                <Text style={{width:40,color:this.props.theme.themeColor,fontSize:17}}>{`+ ${item.coinCount}`}</Text>
+            </View>
+        )
+    }
+}
+
 
 const mapStateToProps = state => {
     return {
@@ -296,5 +319,12 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
+    },
+    score:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        padding:15,
     }
 });

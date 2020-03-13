@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import Toast from '../component/toast';
 
+// {icon:'calendar',title:'TODO'},
 class MenuList extends React.Component{
   constructor(props){
     super(props);
@@ -25,14 +26,11 @@ class MenuList extends React.Component{
       },{
         icon:'hearto',
         title:'我的收藏',
-        path:'shoucang',
+        path:'collect',
       },{
         icon:'sharealt',
         title:'我的分享',
-        path:'fenxiang',
-      },{
-        icon:'calendar',
-        title:'TODO'
+        path:'share',
       },{
         icon:'cloudo',
         title:'主题更换',
@@ -57,6 +55,23 @@ class MenuList extends React.Component{
         AsyncStorage.setItem('themeType',themeType).then(res => {
           this.props.dispatch(theme(_theme[themeType]));
         })
+      });
+    }else if(this.props.score && this.props.score.userId){
+      if(item.path === 'score'){
+        this.props.navigation.navigate('score',{title:'我的积分'});
+      } else if (item.path === 'setting'){
+
+      } else {
+        this.props.navigation.navigate('commonList',{
+          title:item.title,
+          sourceType:item.path,
+          itemType:'article'
+        })
+      }
+    } else {
+      // 跳转到登录页
+      this.toast.show('您还未登录,请先登录!',100,() => {
+        this.props.navigation.navigate('login',{title:'登录'});
       })
     }
   }

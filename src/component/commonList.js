@@ -40,11 +40,32 @@ class CommonList extends React.Component{
       return;
     }
     // 用页码构造地址
-    const url = route.params.sourceType === 'square' ? `/user_article/list/${pageNum}/json` : (
-      route.params.sourceType === 'wechat' ? `/wxarticle/list/${route.params.id}/${pageNum}/json` : (
-      route.params.sourceType === 'project' ? `/project/list/${pageNum}/json?cid=${route.params.id}` : (
-      route.params.sourceType === 'search' ? `/article/query/${pageNum}/json` : `/article/list/${pageNum}/json?cid=${route.params.id}`
-    )));
+    let url;
+    switch(route.params.sourceType){
+      case 'square':
+        url = `/user_article/list/${pageNum}/json`;
+        break;
+      case 'wechat':
+        url = `/wxarticle/list/${route.params.id}/${pageNum}/json`;
+        break;
+      case 'project':
+        url = `/project/list/${pageNum}/json?cid=${route.params.id}`;
+        break;
+      case 'system':
+        url = `/article/list/${pageNum}/json?cid=${route.params.id}`;
+        break;
+      case 'search':
+        url = `/article/query/${pageNum}/json`;
+        break;
+      case 'collect':
+        url = `/lg/collect/list/${pageNum}/json`;
+        break;
+      case 'share':
+        url = `/user/lg/private_articles/${pageNum}/json`;
+        break;
+      default:
+        break;
+    }
     // 搜索需要用post请求
     if(route.params.sourceType === 'search'){
       fetch.post(url,{k:route.params.title}).then((res) => {
@@ -75,18 +96,34 @@ class CommonList extends React.Component{
           if(res.errorCode != 0){
               console.log(res);
           }else{
+            console.log(res);
             let articles;
-            // 如果不是刷新第一页,则concat数组
-            if(pageNum !== 0){
+            // 收藏的文章列表和其他列表数据结构不一致,需要加判断
+            if(route.params.sourceType === 'share'){
+              // 如果不是刷新第一页,则concat数组
+              if(pageNum !== 0){
+                articles = this.state.article.concat(res.data.shareArticles.datas);
+              }else{
+                  articles = res.data.shareArticles.datas;
+              }
+              this.setState({
+                article:articles,
+                pageCount:res.data.shareArticles.pageCount,
+                pageNum
+              })
+            } else {
+              // 如果不是刷新第一页,则concat数组
+              if(pageNum !== 0){
                 articles = this.state.article.concat(res.data.datas);
-            }else{
-                articles = res.data.datas;
+              }else{
+                  articles = res.data.datas;
+              }
+              this.setState({
+                article:articles,
+                pageCount:res.data.pageCount,
+                pageNum
+              })
             }
-            this.setState({
-              article:articles,
-              pageCount:res.data.pageCount,
-              pageNum
-            })
           }
       }).catch( error => {
         console.log(error);
