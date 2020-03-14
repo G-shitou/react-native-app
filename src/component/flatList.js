@@ -77,7 +77,7 @@ class NewFlatList extends React.PureComponent {
     render() {
         return (
             <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
-                {this.props.articles.length === 0 ? <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.themeColor}/> : (
+                {this.props.articles.length === 0 ? <ActivityIndicator style={[styles.loading,{marginTop:win.height/2-100}]} size="large" color={this.props.theme.themeColor}/> : (
                     <FlatList
                         ref={(flatList)=>this._flatList = flatList}
                         refreshControl={

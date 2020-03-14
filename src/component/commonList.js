@@ -96,7 +96,6 @@ class CommonList extends React.Component{
           if(res.errorCode != 0){
               console.log(res);
           }else{
-            console.log(res);
             let articles;
             // 收藏的文章列表和其他列表数据结构不一致,需要加判断
             if(route.params.sourceType === 'share'){

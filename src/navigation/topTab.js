@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import fetch from '../utils/fetch';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import List from '../component/commonList';
 import System from '../page/system';
 import Navigate from '../page/navigate';
+
+// 屏幕
+const win = Dimensions.get('window');
 // topTab navigator
 class TopTab extends React.Component{
   constructor(props){
@@ -96,7 +99,7 @@ class TopTab extends React.Component{
             })
           }
         </Tab.Navigator> : <View style={{flex:1,backgroundColor:this.props.theme.backgroundColor}}>
-          <ActivityIndicator size='large' color={this.props.theme.themeColor} />
+          <ActivityIndicator size='large' color={this.props.theme.themeColor} style={{marginTop:win.height/2-100}} />
         </View>
     );
   }

@@ -128,7 +128,7 @@ class NewScrollView extends React.Component {
             )}
         />}
         </View> : <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
-          <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.themeColor}/></View>
+          <ActivityIndicator style={[styles.loading,{marginTop:win.height/2-100}]} size="large" color={this.props.theme.themeColor}/></View>
     );
   }
 };
