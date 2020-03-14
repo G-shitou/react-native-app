@@ -96,7 +96,7 @@ class TopTab extends React.Component{
             })
           }
         </Tab.Navigator> : <View style={{flex:1,backgroundColor:this.props.theme.backgroundColor}}>
-          <ActivityIndicator size='large' color={this.props.theme.loadingColor} />
+          <ActivityIndicator size='large' color={this.props.theme.themeColor} />
         </View>
     );
   }

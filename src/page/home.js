@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetch from '../utils/fetch';
-import { login, theme } from '../action/login'
+import { login, theme, themeColor } from '../action/login'
 import Swiper from 'react-native-swiper';
 import CookieManager from '@react-native-community/cookies';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -46,9 +46,12 @@ class Home extends React.Component{
     AsyncStorage.getItem('themeType').then(res => {
         themeType = res || 'day';
         // theme[themeType]
-        console.log(themeType)
-        console.log(_theme[themeType])
         this.props.dispatch(theme(_theme[themeType]))
+    });
+    // 主题颜色
+    AsyncStorage.getItem('themeColor').then(res => {
+      let color = res || '#2D92FF';
+      this.props.dispatch(themeColor(color));
     })
   }
 

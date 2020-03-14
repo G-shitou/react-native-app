@@ -77,14 +77,14 @@ class NewFlatList extends React.PureComponent {
     render() {
         return (
             <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
-                {this.props.articles.length === 0 ? <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/> : (
+                {this.props.articles.length === 0 ? <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.themeColor}/> : (
                     <FlatList
                         ref={(flatList)=>this._flatList = flatList}
                         refreshControl={
                             <RefreshControl
                                refreshing={this.state.refreshing}
                                onRefresh={this.onRefresh}
-                               colors={[this.props.theme.loadingColor]}
+                               colors={[this.props.theme.themeColor]}
                                progressBackgroundColor={this.props.theme.backgroundColor}
                            />}
                         onEndReachedThreshold={0.1}
@@ -92,7 +92,7 @@ class NewFlatList extends React.PureComponent {
                         ListHeaderComponent={this.props.children}
                         ListFooterComponent={
                             <View style={styles.loading}>
-                                {(typeof(this.props.pageCount) === 'undefined' || this.props.pageNum < this.props.pageCount -1 ) && <ActivityIndicator size="small" color={this.props.theme.loadingColor}/>}
+                                {(typeof(this.props.pageCount) === 'undefined' || this.props.pageNum < this.props.pageCount -1 ) && <ActivityIndicator size="small" color={this.props.theme.themeColor}/>}
                                 <Text style={[styles.loading_text,{color:this.props.theme.subColor}]}>
                                     {typeof(this.props.pageCount) === 'undefined' ? '正在加载更多数据' : this.props.pageNum < this.props.pageCount - 1 ? '正在加载更多数据' : '已经到底啦!'}
                                 </Text>

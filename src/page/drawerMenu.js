@@ -33,11 +33,12 @@ class MenuList extends React.Component{
         path:'share',
       },{
         icon:'cloudo',
-        title:'主题更换',
+        title:'夜间模式',
         path:'theme',
       },{
         icon:'setting',
-        title:'系统设置'
+        title:'系统设置',
+        path:'setting'
       }]
     }
   }
@@ -56,12 +57,14 @@ class MenuList extends React.Component{
           this.props.dispatch(theme(_theme[themeType]));
         })
       });
-    }else if(this.props.score && this.props.score.userId){
+    }else if(item.path === 'setting'){
+      this.props.navigation.navigate('setting',{
+        title:'系统设置'
+      })
+    } else if (this.props.score && this.props.score.userId){
       if(item.path === 'score'){
         this.props.navigation.navigate('score',{title:'我的积分'});
-      } else if (item.path === 'setting'){
-
-      } else {
+      } else  {
         this.props.navigation.navigate('commonList',{
           title:item.title,
           sourceType:item.path,

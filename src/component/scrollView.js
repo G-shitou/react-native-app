@@ -88,7 +88,7 @@ class NewScrollView extends React.Component {
                refreshing={this.state.refreshing}
                onRefresh={this.onRefresh}
                scrollEventThrottle={100}
-               colors={[this.props.theme.loadingColor]}
+               colors={[this.props.theme.themeColor]}
                progressBackgroundColor={this.props.theme.backgroundColor}
            />}
         >
@@ -128,7 +128,7 @@ class NewScrollView extends React.Component {
             )}
         />}
         </View> : <View style={[styles.container,{backgroundColor:this.props.theme.backgroundColor}]}>
-          <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.loadingColor}/></View>
+          <ActivityIndicator style={styles.loading} size="large" color={this.props.theme.themeColor}/></View>
     );
   }
 };
