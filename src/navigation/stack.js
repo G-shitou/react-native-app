@@ -15,12 +15,42 @@ import Share from '../page/share';
 import CommonList from '../component/commonList';
 import Score from '../page/score';
 import Setting from '../page/setting';
+// 初始化使用
+import CookieManager from '@react-native-community/cookies';
+import AsyncStorage from '@react-native-community/async-storage';
+import config from '../config';
+import { login, theme, themeColor } from '../action/login'
 // toptab 复用
 import Toptab from './topTab';
 const Stack = createStackNavigator();
 const tabNames = ['首页','广场','公众号','体系导航','项目'];
 // Stack 导航设置
 class StackNavigator extends React.Component {
+    UNSAFE_componentWillMount(){
+        // 判断是否有cookie，如果有自动登录
+      CookieManager.get('cookie').then((res) => {
+        if(JSON.stringify(res) != '{}'){
+          this.props.dispatch(login()).then(res=>{
+  
+          }).catch(err => {
+            console.log(err);
+          })
+        }
+      });
+      // 读取本地储存的皮肤信息,初始化themeState
+      const _theme = config.theme;
+      let themeType;
+      AsyncStorage.getItem('themeType').then(res => {
+          themeType = res || 'day';
+          // theme[themeType]
+          this.props.dispatch(theme(_theme[themeType]))
+      });
+      // 主题颜色
+      AsyncStorage.getItem('themeColor').then(res => {
+        let color = res || '#2D92FF';
+        this.props.dispatch(themeColor(color));
+      })
+    }
     render(){
         return (
             <Stack.Navigator

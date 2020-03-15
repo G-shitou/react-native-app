@@ -82,7 +82,7 @@ class TopTab extends React.Component{
           }, 
           tabStyle:{   //设置单个tabbar样式
             height:35,
-            width:'auto',
+            width:this.props.route.params.path === 'systemNavigation' ? win.width/2 : 'auto',
             marginTop:0,
             paddingTop:0
           },

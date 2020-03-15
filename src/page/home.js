@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetch from '../utils/fetch';
-import { login, theme, themeColor } from '../action/login'
 import Swiper from 'react-native-swiper';
-import CookieManager from '@react-native-community/cookies';
-import AsyncStorage from '@react-native-community/async-storage';
-import config from '../config';
 import {
   StyleSheet,
   View,
@@ -29,30 +25,7 @@ class Home extends React.Component{
   }
 
   UNSAFE_componentWillMount(){
-    // 判断是否有cookie，如果有自动登录
-    CookieManager.get('cookie').then((res) => {
-      if(JSON.stringify(res) != '{}'){
-        this.props.dispatch(login()).then(res=>{
-
-        }).catch(err => {
-          console.log(err);
-        })
-      }
-      this.onRefresh();
-    });
-    // 读取本地储存的皮肤信息,初始化themeState
-    const _theme = config.theme;
-    let themeType;
-    AsyncStorage.getItem('themeType').then(res => {
-        themeType = res || 'day';
-        // theme[themeType]
-        this.props.dispatch(theme(_theme[themeType]))
-    });
-    // 主题颜色
-    AsyncStorage.getItem('themeColor').then(res => {
-      let color = res || '#2D92FF';
-      this.props.dispatch(themeColor(color));
-    })
+    this.onRefresh();
   }
 
 
