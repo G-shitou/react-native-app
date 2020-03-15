@@ -84,7 +84,7 @@ class NewFlatList extends React.PureComponent {
                             <RefreshControl
                                refreshing={this.state.refreshing}
                                onRefresh={this.onRefresh}
-                               colors={[this.props.theme.themeColor]}
+                               colors={[this.props.theme.themeColor || '#2D92FF']}
                                progressBackgroundColor={this.props.theme.backgroundColor}
                            />}
                         onEndReachedThreshold={0.1}

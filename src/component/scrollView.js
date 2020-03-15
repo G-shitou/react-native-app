@@ -88,7 +88,7 @@ class NewScrollView extends React.Component {
                refreshing={this.state.refreshing}
                onRefresh={this.onRefresh}
                scrollEventThrottle={100}
-               colors={[this.props.theme.themeColor]}
+               colors={[this.props.theme.themeColor || '#2D92FF']}
                progressBackgroundColor={this.props.theme.backgroundColor}
            />}
         >

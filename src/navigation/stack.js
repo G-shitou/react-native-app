@@ -15,6 +15,7 @@ import Share from '../page/share';
 import CommonList from '../component/commonList';
 import Score from '../page/score';
 import Setting from '../page/setting';
+import Advertisement from '../page/advertisement';
 // 初始化使用
 import CookieManager from '@react-native-community/cookies';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -54,7 +55,7 @@ class StackNavigator extends React.Component {
     render(){
         return (
             <Stack.Navigator
-                initialRouteName="home"     //作为初始化页面、不写的话默认第一个screen为初始化页面
+                initialRouteName="advertisement"     //作为初始化页面、不写的话默认第一个screen为初始化页面
                 mode='modal'
                 headerMode='float'
                 screenOptions={{                 //用来定制头部信息、根据自己需要更改
@@ -96,6 +97,7 @@ class StackNavigator extends React.Component {
                 <Stack.Screen name="commonList" component={CommonList} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
                 <Stack.Screen name="score" component={Score} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
                 <Stack.Screen name="setting" component={Setting} options={({ route, navigation }) => ({title: route.params.title})}></Stack.Screen>
+                <Stack.Screen name="advertisement" component={Advertisement} options={{headerShown:false,headerModeprop:'screen'}}></Stack.Screen>
             </Stack.Navigator>
         )
     }
