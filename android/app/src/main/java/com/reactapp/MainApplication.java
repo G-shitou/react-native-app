@@ -14,6 +14,8 @@ import com.reactapp.umeng.DplusReactPackage;
 import com.reactapp.umeng.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+// 引入热更新
+import cn.reactnative.modules.update.UpdateContext;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -22,6 +24,12 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
+        }
+
+        // 热更新的处理
+        @Override
+        protected String getJSBundleFile() {
+            return UpdateContext.getBundleUrl(MainApplication.this);
         }
 
         @Override
