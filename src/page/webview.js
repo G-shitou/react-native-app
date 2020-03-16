@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 // 引入字体图标组件
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/AntDesign';
+import ShareUtile from '../utils/ShareUtil';
 
 // 屏幕
 const win = Dimensions.get('window');
@@ -45,8 +46,12 @@ class Web extends React.Component {
     }
     
     // 分享文章
-    onShare = (route) => {
-        console.log(1);
+    onShare = () => {
+        const { route } = this.props;
+        ShareUtile.shareboard(route.params.title,'',route.params.url,'有一篇好文章,快来看看吧!',[0,1,2],(code,message) =>{
+           console.log(code);
+           console.log(message);
+        });
     }
 
     render() {

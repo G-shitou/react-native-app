@@ -8,7 +8,7 @@ class Advertisement extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        time: 15,
+        time: 16,
     }
   }
 
@@ -17,7 +17,7 @@ class Advertisement extends React.Component {
     this.timerout = setTimeout(() => {
       SplashScreen.hide();
       clearTimeout(this.timerout);
-    },3000);
+    },1000);
     const { route, navigation} = this.props;
     this.timer = setInterval( () => {
         let time = this.state.time - 1;
