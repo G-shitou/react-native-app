@@ -47,6 +47,7 @@ class Web extends React.Component {
     
     // 分享文章
     onShare = () => {
+        return;
         const { route } = this.props;
         ShareUtile.shareboard(route.params.title,'',route.params.url,'有一篇好文章,快来看看吧!',[0,1,2],(code,message) =>{
            console.log(code);

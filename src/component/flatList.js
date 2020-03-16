@@ -176,7 +176,7 @@ class ProjectItem extends React.PureComponent {
         return (
             <TouchableHighlight onPress={() => this.props.onHandle(item)} >
                 <View style={[styles.project,{borderBottomColor: this.props.theme.borderColor,backgroundColor:this.props.theme.backgroundColor}]}>
-                    <Image style={styles.project_img} source={{uri: item.envelopePic}} loadingIndicatorSource={require('../assets/img/loading.jpg')}></Image>
+                    <Image style={styles.project_img} source={{uri: item.envelopePic}}></Image>
                     <View style={styles.project_content}>
                         <Text numberOfLines={2} style={[styles.project_title,{color:this.props.theme.titleColor}]}>{item.title}</Text>
                         <Text numberOfLines={8} style={[styles.project_desc,{color:this.props.theme.subColor}]}>{item.desc}</Text>
