@@ -14,22 +14,22 @@ import com.reactapp.umeng.DplusReactPackage;
 import com.reactapp.umeng.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-// 引入热更新
-import cn.reactnative.modules.update.UpdateContext;
+// 热更新
+import com.microsoft.codepush.react.CodePush;
 
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
+        // 热更新
+        @Override
+        public String getJSBundleFile(){
+            return CodePush.getJSBundleFile();
+        }
+
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
-        }
-
-        // 热更新的处理
-        @Override
-        protected String getJSBundleFile() {
-            return UpdateContext.getBundleUrl(MainApplication.this);
         }
 
         @Override
@@ -41,7 +41,6 @@ public class MainApplication extends Application implements ReactApplication {
 
           // 添加 DplusReactPackage
           packages.add(new DplusReactPackage());
-
           return packages;
         }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">玩安卓</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">jjuTU39TbtbqyrYX5aDRKkyaWVENCodFO-mob</string>
 </resources>
