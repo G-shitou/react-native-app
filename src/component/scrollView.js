@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   navigate_link:{
     fontSize:14,
-    fontStyle:'italic',
+    // fontStyle:'italic',
     padding:5,
     margin:5,
     borderRadius:5,

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   hot_tag:{
     backgroundColor:'#D9D9D9',
     fontSize:14,
-    fontStyle:'italic',
+    // fontStyle:'italic',
     padding:5,
     margin:5,
     borderRadius:5,

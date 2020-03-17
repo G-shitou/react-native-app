@@ -181,7 +181,7 @@ class ProjectItem extends React.PureComponent {
                         <Text numberOfLines={2} style={[styles.project_title,{color:this.props.theme.titleColor}]}>{item.title}</Text>
                         <Text numberOfLines={8} style={[styles.project_desc,{color:this.props.theme.subColor}]}>{item.desc}</Text>
                         <View style={styles.project_sub}>
-                            <Text style={{flex:1,textAlign:'left',color:this.props.theme.subColor}}>{item.author + '  ' + item.niceDate}</Text>
+                            <Text numberOfLines={1} style={{flex:1,textAlign:'left',color:this.props.theme.subColor}}>{item.author + '  ' + item.niceDate}</Text>
                             <Icon name='heart' size={16} color={item.collect ? '#FF6262': this.props.theme.subColor} onPress={this.props.handleCollect}/>
                         </View>
                     </View>
