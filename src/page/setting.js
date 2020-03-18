@@ -56,7 +56,7 @@ class Setting extends React.Component {
             { this.state.showColor && <View style={[styles.content,{flexWrap:'wrap'}]}>
                 {this.state.colors.map((item,index) => {
                     return <TouchableHighlight key={index} onPress={() => {this.changeColor(item)}}>
-                        <View style={{backgroundColor:item,height:40,width:40,margin:5}}></View>
+                        <View style={{backgroundColor:item,height:40,width:40,borderWidth:5,borderColor:this.props.theme.backgroundColor}}></View>
                     </TouchableHighlight>
                 })}
              </View>
