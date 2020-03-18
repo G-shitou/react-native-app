@@ -8,14 +8,10 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Platform,
 } from 'react-native';
 import FlatList from '../component/flatList';
 import Toast from '../component/toast';
-// 热更新
-import CodePush from "react-native-code-push";
-const CodePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
-const key = 'jjuTU39TbtbqyrYX5aDRKkyaWVENCodFO-mob';
+import HotpushModal from '../component/hotpushModal';
 class Home extends React.Component{
   constructor(props){
     super(props);
@@ -30,21 +26,6 @@ class Home extends React.Component{
 
   UNSAFE_componentWillMount(){
     this.onRefresh();
-    // 热更新
-    CodePush.notifyAppReady();
-    CodePush.sync({
-      updateDialog: {
-          mandatoryUpdateMessage: '为了您的体验请更新',
-          mandatoryContinueButtonLabel: '确认',
-          optionalIgnoreButtonLabel: '忽略',
-          optionalInstallButtonLabel: '安装',
-          optionalUpdateMessage: '发现新的版本,是否更新呢',
-          title: '软件更新'
-      },
-      installMode: CodePush.InstallMode.IMMEDIATE,           // 立即安装
-      mandatoryInstallMode:CodePush.InstallMode.IMMEDIATE,   // 强制更新
-      deploymentKey: key,
-    });
   }
 
   // 登录和未登录状态切换,或者切换用户之后需要刷新数据
@@ -221,6 +202,8 @@ class Home extends React.Component{
             </Swiper>
           </View>
         </FlatList>
+        {/* 热更新面板 */}
+        <HotpushModal/>
         <Toast ref={(toast) => this.toast = toast}></Toast>
       </View>
     );
