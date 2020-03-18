@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 // 引入stackNavigator
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 // 引入字体图标组件
 import Icon from 'react-native-vector-icons/AntDesign'
 // 引入Tab导航
@@ -68,7 +68,9 @@ class StackNavigator extends React.Component {
                     headerTintColor: '#fff',
                     headerTitleStyle: {
                         fontSize: 18,
-                    }
+                    },
+                    // 添加这一行会实现安卓下页面的左右切换，默认是从下到上
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                 }}>
 
                 <Stack.Screen name="home" component={TabScreen}
