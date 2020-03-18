@@ -63,8 +63,7 @@ class Advertisement extends React.Component {
                 />
             </TouchableHighlight>
             <View style={styles.content}>
-                <Text style={styles.text}>{this.state.time + ' s'}</Text>
-                <Text style={[styles.text,styles.skip]} onPress = {this.skip}>跳过</Text>
+                <Text style={styles.text} onPress = {this.skip}>{`${this.state.time} 跳过`}</Text>
             </View>
         </View>
     );
@@ -91,13 +90,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     text:{
-        fontSize:18,
+        fontSize:16,
         color:'#fff',
         padding:5,
-    },
-    skip:{
-        backgroundColor:'gray',
+        backgroundColor:'rgba(0,0,0,0.6)',
         borderRadius:10,
-        marginLeft:10,
-    }
+    },
 })
