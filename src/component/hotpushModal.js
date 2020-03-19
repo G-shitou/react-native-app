@@ -139,7 +139,7 @@ class HotpushModal extends React.Component{
                             </TouchableNativeFeedback>
                         </View>}
                     </View> : <View style={styles.contentArea}>
-                        <Text style={[styles.header,{color:this.props.theme.themeColor}]}>正在更新下载,请稍等</Text>
+                        <Text style={[styles.header,{color:this.props.theme.themeColor}]}>正在更新下载</Text>
                         <ProgressBarAndroid
                             color={this.props.theme.themeColor}
                             indeterminate={false}

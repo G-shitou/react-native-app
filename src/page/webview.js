@@ -13,6 +13,7 @@ import { WebView } from 'react-native-webview';
 // 引入字体图标组件
 import Icon from 'react-native-vector-icons/AntDesign';
 import ShareUtile from '../utils/ShareUtil';
+import Toast from '../component/toast';
 
 // 屏幕
 const win = Dimensions.get('window');
@@ -47,6 +48,7 @@ class Web extends React.Component {
     
     // 分享文章
     onShare = () => {
+        this.toast.show('功能正在开发中!')
         return;
         const { route } = this.props;
         ShareUtile.shareboard(route.params.title,'',route.params.url,'有一篇好文章,快来看看吧!',[0,1,2],(code,message) =>{
@@ -73,6 +75,7 @@ class Web extends React.Component {
                         {progress: nativeEvent.progress}
                     )}
                 />
+                 <Toast ref={(toast) => this.toast = toast}></Toast>
             </View>
         );
     }
