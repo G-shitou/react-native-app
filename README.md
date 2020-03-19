@@ -9,7 +9,7 @@ react-native run-android
 6. 登录、注册和退出
 7. 夜间模式
 8. 主题颜色
-9. 热更新（关于热更新的文章请[点击查看](https://blog.csdn.net/weixin_42613755/article/details/104962506)）
+9. 热更新
 更多功能开发中......
 ####  效果图
 ![conv_ops](./review.gif)
