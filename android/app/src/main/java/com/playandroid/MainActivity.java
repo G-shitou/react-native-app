@@ -1,4 +1,4 @@
-package com.reactapp;
+package com.playandroid;
 
 import com.facebook.react.ReactActivity;
 // 安卓启动屏
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
 // 友盟引入
 import com.umeng.socialize.UMShareAPI;
-import com.reactapp.umeng.ShareModule;
+import com.playandroid.umeng.ShareModule;
 import android.content.Intent;
 
 public class MainActivity extends ReactActivity {
@@ -17,7 +17,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "reactApp";
+    return "playandroid";
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {

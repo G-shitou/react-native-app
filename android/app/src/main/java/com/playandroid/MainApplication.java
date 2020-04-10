@@ -1,4 +1,4 @@
-package com.reactapp;
+package com.playandroid;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,8 +10,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 // 友盟引入
-import com.reactapp.umeng.DplusReactPackage;
-import com.reactapp.umeng.RNUMConfigure;
+import com.playandroid.umeng.DplusReactPackage;
+import com.playandroid.umeng.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 // 热更新

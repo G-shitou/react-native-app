@@ -1,4 +1,4 @@
-package com.reactapp.umeng;
+package com.playandroid.umeng;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

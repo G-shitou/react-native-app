@@ -1,4 +1,4 @@
-package com.reactapp.umeng;
+package com.playandroid.umeng;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.reactapp.umeng.wxapi;
+package com.playandroid.umeng.wxapi;
 import android.content.Intent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
